@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsky.baas.configservice.dao.GameConfigMapper">
+	<resultMap id="BaseResultMap" type="com.dsky.baas.configservice.model.PromoterBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="gameId" property="gameId" jdbcType="VARCHAR" />
+		<result column="gameName" property="gameName" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+		<result column="gameType" property="gameType" jdbcType="VARCHAR" />
+		<result column="beginTime" property="beginTime" jdbcType="TIMESTAMP" />
+		<result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="preheatingTime" property="preheatingTime" jdbcType="TIMESTAMP" />
+		<result column="exchH5Url" property="exchH5Url" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="createdBy" property="createdBy" jdbcType="VARCHAR" />
+		<result column="preheatingUrl" property="preheatingUrl" jdbcType="VARCHAR" />
+		<result column="endDesc" property="endDesc" jdbcType="VARCHAR" />
+		<result column="exchCash" property="exchCash" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="RedeemCodeResultMap" type="com.dsky.baas.configservice.model.RedeemCodeBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="devicecount" property="deviceCount" jdbcType="INTEGER" />
+		<result column="devicelimit" property="deviceLimit" jdbcType="INTEGER" />
+		<result column="recommandcount" property="recommandCount" jdbcType="INTEGER" />
+		<result column="h5Url" property="h5Url" jdbcType="VARCHAR" />
+		<result column="imgUrl" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="redeemDesc" property="redeemDesc" jdbcType="VARCHAR" />
+		<result column="shareMethod" property="shareMethod" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="IntegralSchemeResultMap" type="com.dsky.baas.configservice.model.IntegralSchemeBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="register" property="register" jdbcType="INTEGER" />
+		<result column="level" property="level" jdbcType="INTEGER" />
+		<result column="levelSecond" property="levelSecond" jdbcType="INTEGER" />
+		<result column="levelThird" property="levelThird" jdbcType="INTEGER" />				
+		<result column="time" property="time" jdbcType="INTEGER" />
+		<result column="promoterA" property="promoterA" jdbcType="INTEGER" />
+		<result column="promoterAFirst" property="promoterAFirst" jdbcType="INTEGER" />
+		<result column="promoterASecond" property="promoterASecond" jdbcType="INTEGER" />		
+		<result column="promoterAThird" property="promoterAThird" jdbcType="INTEGER" />
+		<result column="promoterB" property="promoterB" jdbcType="INTEGER" />
+		<result column="promoterBSecond" property="promoterBSecond" jdbcType="INTEGER" />	
+		<result column="promoterBThird" property="promoterBThird" jdbcType="INTEGER" />			
+		<result column="promoterATime" property="promoterATime" jdbcType="INTEGER" />
+		<result column="redeemCode" property="redeemCode" jdbcType="INTEGER" />
+		<result column="recharge" property="recharge" jdbcType="INTEGER" />
+		<result column="rechargeA" property="rechargeA" jdbcType="INTEGER" />
+		<result column="rechargeB" property="rechargeB" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="OrderResultMap" type="com.dsky.baas.configservice.model.OrderBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="orderId" property="orderId" jdbcType="VARCHAR" />
+		<result column="gameName" property="gameName" jdbcType="VARCHAR" />
+		<result column="userId" property="userId" jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="INTEGER" />
+		<result column="time" property="time" jdbcType="INTEGER" />
+		<result column="totalScore" property="totalScore" jdbcType="INTEGER" />
+		<result column="exchangeScore" property="exchangeScore" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Order_Column_List">
+		id, orderId,gameName,userId,level,time,totalScore,exchangeScore,state
+	</sql>
+		
+	<sql id="Base_Column_List">
+		id, gameId, gameName, location, gameType, beginTime,endTime,preheatingTime,exchH5Url,state,createdBy,preheatingUrl,endDesc,exchCash
+	</sql>
+		
+	<select id="selectByPaging" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from tb_promoter where gameName=#{gameName} or 'SUPER_ADMIN'=#{userRole}
+		ORDER BY id desc limit #{startRow},#{endRow};
+	</select>
+
+	<select id="selectOrderByPaging" resultMap="OrderResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Order_Column_List" />
+		from tb_order
+		ORDER BY id desc limit #{startRow},#{endRow};
+	</select>
+	
+	<select id="getPromoterTotalRows" resultType="int">
+		select count(*) from tb_promoter where gameName=#{gameName}<!-- where createdBy=#{createdBy} or 'SUPER_ADMIN'=#{userRole} -->;
+	</select>
+	
+	<select id="getOrderTotalRows" resultType="int">
+		select count(*) from tb_order;
+	</select>
+	
+	<select id="selectByOptions" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from tb_promoter where <!-- (createdBy = #{createdBy} or 'SUPER_ADMIN'=#{userRole}) and --> gameName = #{gameName} and location = #{location} and beginTime &gt;= #{beginTime} and endTime &lt;= #{endTime} ORDER BY id desc limit #{startRow},#{endRow};
+	</select>
+	
+	<select id="selectBySearchingPage" resultType="int"
+		parameterType="java.util.Map">
+		select count(*) from tb_promoter where <!-- (createdBy = #{createdBy} or 'SUPER_ADMIN'=#{userRole}) and --> gameName = #{gameName} and location = #{location} and beginTime &gt;= #{beginTime} and endTime &lt;= #{endTime};
+	</select>
+	<!-- 获取mysql表中新插入一行的id号 -->
+	<select id="getLastInsertId" resultType="int">
+		select last_insert_id() as id from tb_promoter limit 1;
+	</select>
+	
+	<!-- 对外提供查询 -->
+	<select id="selectPromoterBeanById" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select * from tb_promoter where id=#{id} ;
+	</select>
+	<select id="selectRedeemCodeById" resultMap="RedeemCodeResultMap" parameterType="java.lang.Integer">
+		select * from tb_redeemcode where id=#{id};
+	</select>
+	
+	<select id="selectIntegralSchemeById" resultMap="IntegralSchemeResultMap" parameterType="java.lang.Integer">
+		select * from tb_integralscheme where id=#{id};
+	</select>
+	<!-- 判断新创建的数据是否可创建 -->
+	<select id="createPromoter"  resultType="String" parameterType="com.dsky.baas.configservice.model.PromoterBean">
+		select 'false' from tb_promoter where  gameName=#{gameName} and  state =1 and (
+		             ( endTime &gt;= #{beginTime} and endTime &lt;= #{endTime} ) or 
+		             ( beginTime &lt;= #{beginTime} and endTime &gt;= #{endTime}) or
+		             ( beginTime &gt;= #{beginTime} and endTime &gt;= #{endTime} and beginTime &lt;=#{endTime})
+		             ) order by endTime desc limit 1;
+	</select>
+	
+		<!-- 判断新更新的数据是否可创建 -->
+	<select id="updatePromoter"  resultType="String" parameterType="com.dsky.baas.configservice.model.PromoterBean">
+		select 'false' from tb_promoter where  gameName=#{gameName} and  state =1 and (
+		             ( endTime &gt;= #{beginTime} and endTime &lt;= #{endTime} ) or 
+		             ( beginTime &lt;= #{beginTime} and endTime &gt;= #{endTime}) or
+		             ( beginTime &gt;= #{beginTime} and endTime &gt;= #{endTime} and beginTime &lt;=#{endTime})
+		             ) and id &lt;&gt; #{id} order by endTime desc limit 1;
+	</select>
+	
+	<!-- 对外提供查询 -->
+	<select id="selectPromoterByGameIdAndLocation" resultMap="BaseResultMap" parameterType="java.util.Map">
+	    select
+	    <include refid="Base_Column_List" />
+		from tb_promoter
+		where gameId=#{gameId} and location=#{location} order by endTime desc limit 1;
+	</select>
+	
+	<update id="updatePromoterById" parameterType="com.dsky.baas.configservice.model.PromoterBean">
+		update tb_promoter
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="gameId != null">
+				gameId = #{gameId,jdbcType=VARCHAR},
+			</if>
+			<if test="gameName != null">
+				gameName = #{gameName,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="gameType != null">
+				gameType = #{gameType,jdbcType=VARCHAR},
+			</if>
+			<if test="exchH5Url != null">
+				exchH5Url = #{exchH5Url,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				beginTime = #{beginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				endTime = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="preheatingTime != null">
+				preheatingTime = #{preheatingTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="preheatingUrl != null">
+				preheatingUrl = #{preheatingUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="endDesc != null">
+				endDesc = #{endDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="exchCash != null">
+				exchCash = #{exchCash,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateRedeemCodeById" parameterType="com.dsky.baas.configservice.model.RedeemCodeBean">
+		update tb_redeemcode
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="deviceCount != null">
+				devicecount = #{deviceCount,jdbcType=INTEGER},
+			</if>
+			<if test="deviceLimit != null">
+				devicelimit = #{deviceLimit,jdbcType=INTEGER},
+			</if>
+			<if test="recommandCount != null">
+				recommandcount = #{recommandCount,jdbcType=INTEGER},
+			</if>
+			<if test="h5Url != null">
+				h5Url = #{h5Url,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				imgUrl = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="redeemDesc != null">
+				redeemDesc = #{redeemDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="shareMethod != null">
+				shareMethod = #{shareMethod,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+ 	
+	<update id="updateIntegralSchemeById" parameterType="com.dsky.baas.configservice.model.IntegralSchemeBean">
+		update tb_integralscheme
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="register != null">
+				register = #{register,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=INTEGER},
+			</if>
+			<if test="levelSecond != null">
+				levelSecond = #{levelSecond,jdbcType=INTEGER},
+			</if>
+			<if test="levelThird != null">
+				levelThird = #{levelThird,jdbcType=INTEGER},
+			</if>						
+			<if test="time != null">
+				time = #{time,jdbcType=INTEGER},
+			</if>
+			<if test="promoterA != null">
+				promoterA = #{promoterA,jdbcType=INTEGER},
+			</if>
+			<if test="promoterATime != null">
+				promoterATime = #{promoterATime,jdbcType=INTEGER},
+			</if>
+			<if test="promoterALevel != null">
+				promoterALevel = #{promoterALevel,jdbcType=INTEGER},
+			</if>
+			<if test="promoterAFirst != null">
+				promoterAFirst = #{promoterAFirst,jdbcType=INTEGER},
+			</if>
+			<if test="promoterASecond != null">
+				promoterASecond = #{promoterASecond,jdbcType=INTEGER},
+			</if>
+			<if test="promoterAThird != null">
+				promoterAThird = #{promoterAThird,jdbcType=INTEGER},
+			</if>			
+			<if test="promoterB != null">
+				promoterB = #{promoterB,jdbcType=INTEGER},
+			</if>
+			<if test="promoterBSecond != null">
+				promoterBSecond = #{promoterBSecond,jdbcType=INTEGER},
+			</if>
+			<if test="promoterB != null">
+				promoterBThird = #{promoterBThird,jdbcType=INTEGER},
+			</if>
+			<if test="redeemCode != null">
+				redeemCode = #{redeemCode,jdbcType=INTEGER},
+			</if>
+			<if test="rechargeA != null">
+				rechargeA = #{rechargeA,jdbcType=INTEGER},
+			</if>
+			<if test="rechargeB != null">
+				rechargeB = #{rechargeB,jdbcType=INTEGER},
+			</if>
+			<if test="recharge != null">
+				recharge = #{recharge,jdbcType=INTEGER},
+			</if>			
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateState" parameterType="java.util.Map">
+		update tb_promoter
+		<set>
+			state = #{state,jdbcType=INTEGER}
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+		
+	<insert id="insertPromoter" parameterType="com.dsky.baas.configservice.model.PromoterBean">
+		insert into tb_promoter (gameId,gameName,location,gameType,beginTime,endTime,endDesc,preheatingTime,preheatingUrl,exchH5Url,createdBy,exchCash)
+		values (#{gameId,jdbcType=VARCHAR},
+		#{gameName,jdbcType=VARCHAR},
+		#{location,jdbcType=VARCHAR}, #{gameType,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{endDesc,jdbcType=VARCHAR},
+		#{preheatingTime,jdbcType=TIMESTAMP},#{preheatingUrl,jdbcType=VARCHAR},
+		#{exchH5Url,jdbcType=VARCHAR},#{createdBy,jdbcType=VARCHAR},#{exchCash,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="insertRedeemCode" parameterType="com.dsky.baas.configservice.model.RedeemCodeBean">
+		insert into tb_redeemcode (id, devicecount,devicelimit,recommandcount,h5Url,imgUrl,title,redeemDesc,shareMethod)
+		values (#{id,jdbcType=INTEGER}, #{deviceCount,jdbcType=INTEGER},#{deviceLimit,jdbcType=INTEGER},
+		#{recommandCount,jdbcType=INTEGER},#{h5Url,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{redeemDesc,jdbcType=VARCHAR},#{shareMethod,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertIntegralScheme" parameterType="com.dsky.baas.configservice.model.IntegralSchemeBean">
+		insert into tb_integralscheme (id, register,level,levelSecond,levelThird,time,promoterA,promoterB,promoterBSecond,
+		                               promoterBThird,promoterAFirst,promoterASecond,promoterAThird,promoterATime,promoterALevel,
+		                               redeemCode,rechargeA,rechargeB,recharge)
+		values (#{id,jdbcType=INTEGER}, #{register,jdbcType=INTEGER},
+		#{level,jdbcType=INTEGER},#{levelSecond,jdbcType=INTEGER},#{levelThird,jdbcType=INTEGER},#{time,jdbcType=INTEGER},#{promoterA,jdbcType=INTEGER}, 
+		#{promoterB,jdbcType=INTEGER},#{promoterBSecond,jdbcType=INTEGER},#{promoterBThird,jdbcType=INTEGER},
+		#{promoterAFirst,jdbcType=INTEGER},#{promoterASecond,jdbcType=INTEGER},#{promoterAThird,jdbcType=INTEGER},#{promoterATime,jdbcType=INTEGER},
+		#{promoterALevel,jdbcType=INTEGER},#{redeemCode,jdbcType=INTEGER},#{rechargeA,jdbcType=INTEGER},#{rechargeB,jdbcType=INTEGER},#{recharge,jdbcType=INTEGER})
+	</insert>
+	
+	<delete id="deletePromoterById" parameterType="java.lang.Integer">
+		delete from tb_promoter
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteRedeemCodeById" parameterType="java.lang.Integer">
+		delete from tb_redeemcode
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteIntegralSchemeById" parameterType="java.lang.Integer">
+		delete from tb_integralscheme
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+</mapper>

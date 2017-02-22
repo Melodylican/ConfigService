@@ -1,0 +1,150 @@
+/** layout **/
+.clearfix:after,.layout:after{content:'\20';display:block;height:0;clear:both;visibility:hidden}
+.clearfix,.layout{*zoom:1}
+.fl{float:left;}
+.fr{float:right;}
+.blue{color:#4590d1;}
+.tc{text-align:center;}
+.select{min-width:80px;height:22px;}
+.iText{width:250px;height:18px;padding:5px;border:1px solid #c9c9c9;color:#666;}
+.btn,.cancel{width:85px;height: 30px;background: #4590d1;color:#fff;border:none;border-radius:3px;}
+a.btn,.cancel{display: inline-block;*display: inline;*zoom:1;text-align: center;line-height: 30px;}
+a.btn:hover{color: #fff;text-decoration: none;}
+.disabled,a.disabled:hover{background: #e2e2e2;color: #929292;text-shadow:0 0 1px #fff;cursor: default;}
+.cancel,.cancel:hover{background: #e2e2e2;color: #929292;text-shadow:0 0 1px #fff;cursor: default;text-decoration: none;}
+/* header */
+
+.header{height:87px;background:#f1f1f1;border-top:1px solid #9ea1a5;}
+.userBar{height:32px;margin-top:22px;line-height: 32px;float:right;font-size:12px;}
+.userBar a{margin:0 10px;color:#206ecd;}
+.userBar .logout{color:#fff;display:inline-block;*display:inline;*zoom:1;background:#206ecd;width:50px;height:24px;text-align:center;line-height:24px;}
+
+h1{float: left;margin:0 20px 0 40px;}
+h1 img{margin-top:10px;}
+h2.title{float: left;margin-top: 30px;padding-left:20px;height:28px;line-height:28px;border-left:1px solid #ccc;font-size:20px;font-weight:400;font-family: "Microsoft YaHei";}
+h2.title em{color:#880084;}
+
+/* content */
+
+.mainWrap{margin-left:220px;}
+.sidebar{color:#7b7b7b;line-height:39px;width:220px;margin-left:-220px;float:left;padding-top:15px;background:#222;min-height:600px;}
+.sidebar h3{padding-left:62px;background:url("img/sub-icon.png") no-repeat;}
+.sidebar h3.yh{background-position: 31px 10px;}
+.sidebar h3.yx{background-position: 31px -48px;}
+.sidebar h3.sj{background-position: 31px -116px;}
+.sidebar h3.zy{background-position: 31px -198px;}
+.sidebar h3.ms{background-position: 31px -286px;}
+.sidebar li{height:39px;padding-left:4px;}
+.sidebar li.cur{background: #1a1818;border-left:4px solid #4590d1;padding:0;}
+.sidebar li a{color:#ccc;height:39px;display: block;padding-left:58px;background:url("img/sub-icon.png") no-repeat 47px -326px;}
+.sidebar li.cur a{color:#fff;font-weight: 700;}
+
+
+.colMain{color:#666;width: 100%;float: left;}
+.colMain .crumb{height:45px;line-height: 45px;padding-left: 26px;}
+.colMain .toolbar{height: 30px;padding:13px 26px;line-height: 30px;background: #f9f9f9;}
+.colMain .toolbar p.fl{margin-right: 20px;}
+
+.grid{margin:0 16px;}
+
+.grid table{width:100%;}
+.grid table td,.grid table th{height: 52px;line-height: 52px;}
+.grid table td{text-align: center;border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;}
+.grid table .odd td{background:#f9f9f9;}
+.grid table .check td{background:#fffae6;border-top:1px solid #faf0c8;border-bottom:1px solid #faf0c8;}
+
+.grid table .checkbox{width:16px;height: 16px;background: url("img/checkbox_bg.png") no-repeat;cursor:pointer;display: inline-block;*display: inline:*zoom:1;}
+.grid table .checkbox-check{background-position: 0 -16px;}
+.grid table td a{
+	color:#fff;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	background:rgb(123,123,123);
+	width:65px;
+	height:24px;
+	text-align:center;
+	line-height:24px;
+}
+.Content-Left{
+    height:auto;
+    width:750px;
+    margin:10px;/*设置元素跟其他元素的距离为20像素*/
+    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+
+}
+.Content-Main{
+    height:auto;
+    width:750px;
+    margin:10px;/*设置元素跟其他元素的距离为20像素*/
+    margin-left:10px;
+    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+}
+
+.Content-pic1{
+    height:auto;
+    width:500px;
+    margin:50px;/*设置元素跟其他元素的距离为20像素*/
+    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+
+}
+.Content-pic2{
+    height:auto;
+    width:500px;
+    margin:50px;/*设置元素跟其他元素的距离为20像素*/
+    margin-left:60px;
+    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+}
+
+
+
+.Clear{
+    clear:both;
+}
+.tfoot{margin: 16px}
+
+.pagination{height:30px;text-align: center;margin:50px 0 100px;position: relative;}
+.pagination span,.pagination a{height: 28px;padding:0 12px;margin:0 2px;background:#fff;display: inline-block;*zoom:1;*display: inline;text-align: center;line-height:28px;border:1px solid #b7b7b7;font-size: 12px;vertical-align: top;}
+.pagination a.cur{background:#4590d1;border: 1px solid #4590d1;text-decoration: none;color:#fff;}
+
+
+.tabs{height: 34px;padding:3px 0 16px;border-bottom: 1px solid #f0f0f0;margin: 0 26px;}
+.tabs li{float:left;height: 34px;width:100px;margin-right: 10px;}
+.tabs li a{display: block;height:28px;background: #f1f1f1;border:1px solid #dddbdb;line-height: 30px;text-align: center;}
+.tabs li.cur{background:url("img/tabs-arrow.png") no-repeat 50% 100%;}
+.tabs li.cur a{background:#4590d1;border: 1px solid #4590d1;color:#fff;text-decoration:none;}
+
+.form li:after{content:'';display:block;height:0;clear:both;}
+.form li{*zoom:1;line-height:32px;font-size:14px;margin-bottom:20px;}
+.form li .label{width:150px;float:left;text-align:right;margin-right:20px;}
+.form li .label em{color:#f00;font-family:sans-serif;font-size:12px;}
+.form li .fc{padding-left:170px;}
+.form li .fc .iText,.form li .fc textarea{padding:5px;height:20px;width:150px;line-height:20px;border:1px solid #ccc;background:#fcfcfc;}
+.form li .fc textarea{width:400px;height:60px;}
+.form li .fc select{min-width:162px;width:auto!important;height:30px;line-height:30px;}
+
+
+
+/* config */
+
+.alert .dialogContent,.confirm .dialogContent,.warn .dialogContent{padding:30px 20px 0; text-align: center;}
+.popup_container #close{width: 10px;height:10px;position: absolute;right:20px;top:20px;background:url("img/pop-close.png") no-repeat;overflow:hidden;text-indent: -999em;}
+.error_btn{color:#f00;margin-right:10px;}
+.error{color:#f00;margin-left:20px;}
+.mask .dialogContent{padding:10px 10px 10px 60px;line-height: 30px;background:url("img/loading.gif") no-repeat 30px 19px;}
+.number{ime-mode:disabled;}
+
+.btn1{width:100px;height: 30px;background:#ddd;color:##333;border:1px solid #999;border-radius:0px;}
+a.btn1{display: inline-block;*display: inline;*zoom:1;text-align: center;line-height: 30px;}
+a.btn1:hover{color: #333;text-decoration: none;}
+
+
+
+.gameType{width:16px;height: 16px;background: url("img/checkbox_bg.png") no-repeat;cursor:pointer;display: inline-block;*display: inline:*zoom:1;background-position: 0 -16px;}
+.checkbox{width:16px;height: 16px;background: url("img/checkbox_bg.png") no-repeat;cursor:pointer;display: inline-block;*display: inline:*zoom:1;}
+.checkbox-check{background-position: 0 -16px;}
+.inputStyle {
+	vertical-align:text-bottom;
+	margin-bottom:-5px;
+	/**margin-bottom:-6px;*/
+}

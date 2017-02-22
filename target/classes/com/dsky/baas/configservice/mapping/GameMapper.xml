@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsky.baas.configservice.dao.GameMapper">
+	<resultMap id="GameResultMap" type="com.dsky.baas.configservice.model.GameBean">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="gameName" property="gameName" jdbcType="VARCHAR" />
+		<result column="gameId" property="gameId" jdbcType="VARCHAR" />
+		<result column="createdTime" property="createdTime" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+
+	
+	<sql id="Game_Column_List">
+		id,gameName,department,gameId,createdTime,description,state
+	</sql>
+	
+	<select id="selectGameByPaging" resultMap="GameResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Game_Column_List" />
+		from tb_gameType
+		ORDER BY id desc limit #{startRow},#{endRow};
+	</select>
+
+	<select id="getGameTotalRows" resultType="int">
+		select count(*) from tb_gameType;
+	</select>
+	
+	<update id="updateGameState" parameterType="java.util.Map">
+		update tb_gameType
+		<set>
+			state = #{state,jdbcType=INTEGER}
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateGameById" parameterType="com.dsky.baas.configservice.model.GameBean">
+		update tb_gameType
+		<set>
+			<if test="gameName != null">
+				gameName = #{gameName},
+			</if>
+		    <if test="gameId != null">
+				gameId = #{gameId},
+			</if>
+			<if test="department != null">
+				department = #{department},
+			</if>
+			<if test="createdTime != null">
+				createdTime = #{createdTime},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<insert id="insertGame" parameterType="com.dsky.baas.configservice.model.GameBean">
+		insert into tb_gameType (gameName,department,gameId,createdTime,description)
+		values (#{gameName},#{department},#{gameId},#{createdTime},#{description})
+	</insert>
+	
+	<delete id="deleteGameById" >
+		delete from tb_gameType
+		where id = #{id}
+	</delete>
+	
+</mapper>

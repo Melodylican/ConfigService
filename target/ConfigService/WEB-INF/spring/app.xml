@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    	<!-- 静态资源处理， css， js， imgs -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<context:annotation-config />
+	
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxActive" value="${redis.maxActive}"></property>
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <property name="maxWait" value="${redis.maxWait}"></property>
+    </bean>
+      
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy">  
+        <property name="poolConfig" ref="jedisPoolConfig"></property>
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.pass}"></property>
+        <property name="timeout" value="${redis.timeout}"></property>
+        <property name="usePool" value="true"></property>
+    </bean>
+    
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">  
+        <property name="connectionFactory" ref="jedisConnectionFactory"></property>  
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
+        </property>
+    </bean>
+    
+    <bean id="cacheService" class="com.dsky.baas.configservice.dao.RedisMethonds">
+        <property name="redisTemplate" ref="redisTemplate"></property>   
+    </bean>
+    
+    <bean id="userInfoService" class="com.dsky.baas.configservice.service.impl.UserInfoService">
+        <property name="userInfoUrl" value="${getInfo.url}"></property>
+        <property name="forumUrl" value="${getforum.api}"></property>
+        <property name="forumReply" value="${replyforum.api}"></property>
+    </bean>
+    <!-- 
+    <bean id="ipWhiteListBean" class="com.dsky.baas.configservice.model.IPWitheListBean">
+        <property name="ipWhiteList" value="${ip.white.list}"></property>
+    </bean>
+     -->
+    
+	
+</beans>

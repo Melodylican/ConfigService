@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.5//EN" "file:/usr/local/tomcat_report/lib/spring-beans-2.0.dtd">
+<beans>
+	<!-- rmi远程调用 -->
+	<bean id="testRmiService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>rmi://127.0.0.1:9500/remoteService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.idreamsky.promoter.test.rmi.IRmiServer</value>
+		</property>
+		<!-- 断线自动重连 -->
+		<property name="refreshStubOnConnectFailure">
+            <value>true</value>
+      </property>
+		
+	</bean>
+</beans>
