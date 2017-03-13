@@ -137,7 +137,7 @@
 		<input type="hidden" name="gameName" value="${gameName }" />
 		<input type="hidden" name="from_uid" id="from_uid" value="0" />
 		<input type="hidden" name="to_uid" id="to_uid" value="0" />
-		<input type="hidden" name="from_nickname" id="from_nickname" value="boss" />
+		<input type="hidden" name="from_nickname" id="from_nickname" value="管理员" />
 		<input type="hidden" name="to_nickname" id="to_nickname" value="0" />
 		<input type="hidden" name="cid" id="cid" value="0" />
 		<input type="hidden" name="page" value="${page}" />

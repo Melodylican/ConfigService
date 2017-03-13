@@ -52,7 +52,6 @@ public class GameConfigController {
 	}
 
 	/**
-	 * 
 	 * 方法功能说明：进入配置信息主页面
 	 * 创建： by chris.li 
 	 * 修改：日期 2016年11月25日 by chris.li
