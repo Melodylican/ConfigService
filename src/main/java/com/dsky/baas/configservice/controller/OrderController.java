@@ -1186,9 +1186,9 @@ public class OrderController {
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
 	public String playerSearch(HttpServletRequest request,Model model) {
 		logger.info("GameConfigController  -->   【/promoter/playersearch】");
-		String actId = request.getParameter("actId");
-		String gameId = request.getParameter("gameId");
-		String gameName = request.getParameter("gameName");
+		String actId = request.getParameter("actId").trim();
+		String gameId = request.getParameter("gameId").trim();
+		String gameName = request.getParameter("gameName").trim();
 		String playerId = request.getParameter("playerId");
 		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");    
 

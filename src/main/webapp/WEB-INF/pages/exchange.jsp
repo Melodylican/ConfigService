@@ -11,13 +11,10 @@
 <head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <title>推广员后台管理系统</title>
-<link href="<%=request.getContextPath()%>/resources/css/reset.css"
-	rel="stylesheet" type="text/css">
-	<link rel="stylesheet"type="text/css" href="<%=request.getContextPath()%>/resources/css/reveal.css">
-<link href="<%=request.getContextPath()%>/resources/css/layout-ms.css"
-	rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<link href="<%=request.getContextPath()%>/resources/css/reset.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/resources/css/reveal.css" rel="stylesheet"type="text/css" >
+<link href="<%=request.getContextPath()%>/resources/css/layout-ms.css"rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css"  rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -87,9 +84,8 @@
 				<div class="grid">
 					<table width="1000">
 						<thead>
-							<tr
-								style="background-color:rgb(220,220,220); height:30px; width:100%;">
-								<th><span class="checkbox" id="checkAll"></span></th>
+							<tr style="background-color:rgb(220,220,220); height:30px; width:100%;">
+								<!-- <th><span class="checkbox" id="checkAll"></span></th>  -->
 								<th>游戏名称</th>
 								<th>兑换开始时间</th>
 								<th>兑换结束时间</th>
@@ -107,7 +103,7 @@
 						</c:if>
 							<c:forEach items="${list}" var="list">
 							<tr class="odd">
-								<td><span class="checkbox"></span></td>
+								<!-- <td><span class="checkbox"></span></td> -->
 								<td>${list.gameName}</td>
 								<td>${list.exchBeginTime}</td>
 								<td>${list.exchEndTime}</td>

@@ -92,13 +92,12 @@
 				<div class="grid">
 					<table width="1000">
 						<thead>
-							<tr
-								style="background-color:rgb(220,220,220); height:30px; width:100%;">
-								<th><span class="checkbox" id="checkAll"></span></th>
+							<tr style="background-color:rgb(220,220,220); height:30px; width:100%;">
+								<!-- <th><span class="checkbox" id="checkAll"></span></th>  -->
 								<th>游戏名称</th>
 								<th>游戏ID</th>
 								<th>国家和地区</th>
-								<th>分享要求</th>
+								<!--<th>分享要求</th>-->
 								<th>开始时间</th>
 								<th>结束时间</th>
 								<th>预热时间</th>
@@ -111,11 +110,11 @@
 						</c:if>
 							<c:forEach items="${list}" var="list">
 							<tr class="odd">
-								<td><span class="checkbox"></span></td>
+								<!-- <td><span class="checkbox"></span></td>  -->
 								<td>${list.gameName}</td>
 								<td>${list.gameId}</td>
 								<td>${list.location}</td>
-								<td>${list.gameType}</td>
+								<!-- <td>${list.gameType}</td>  分享要求删除-->
 								<td>${list.beginTime}</td>
 								<td>${list.endTime}</td>
 								<td>${list.preheatingTime }</td>
