@@ -6,4 +6,15 @@
  	<bean id="OrderListExcel"
 	   	class="com.dsky.baas.configservice.service.excel.PassedOrderListView">
 	</bean>
+	
+	<bean id="StatisticsPic1Excel"
+	   	class="com.dsky.baas.configservice.service.excel.StatisticsPic1View">
+	</bean>
+	
+	<bean id="StatisticsPic2Excel"
+	   	class="com.dsky.baas.configservice.service.excel.StatisticsPic2View">
+	</bean>
+	<bean id="StatisticsPic3Excel"
+	   	class="com.dsky.baas.configservice.service.excel.StatisticsPic3View">
+	</bean>
 </beans>

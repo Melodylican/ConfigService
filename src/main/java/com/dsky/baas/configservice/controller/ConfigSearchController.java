@@ -238,6 +238,7 @@ public class ConfigSearchController {
 		String gameId = "";
 		String location = "";
 		String _cip = cookieMap.get("_cip");
+		String uid = cookieMap.get("uid");
 		logger.info("获取到的客户端ip="+_cip);
 		if (!cookieMap.containsKey("gid")) {
 			logger.info("ConfigSearchController /act接口  鉴权中没有gid字段" + gameId);
@@ -271,6 +272,14 @@ public class ConfigSearchController {
 				logger.info("redis中没有对应于【"+gameId+"】的活动配置信息，现将其放入redis中key【act_exchage_"+gameId+"】");
 			}
 		}
+		//用于查询黑名单的键值
+		String searchBlaskListKey = "blackList:"+promoterBean.getId()+":"+promoterBean.getGameId()+":"+uid;
+		String isInBlaskList = RedisMethonds.get(searchBlaskListKey);
+		logger.info("查询黑名单的键值： "+searchBlaskListKey +"   查询结果： "+isInBlaskList);
+		if(isInBlaskList != null && isInBlaskList.length() > 0)
+			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+					.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
+		
 		logger.info("ConfigSearchController /act接口  gameId="+gameId+"  "+promoterBean.toString());
 
 		/*
@@ -328,6 +337,7 @@ public class ConfigSearchController {
 		logger.info("ConfigSearchController  -->   【/exch】");
 		Map<String, String> cookieMap = CommonUtil.parseHeaderCookie(req);
 
+
 		if (cookieMap == null) {
 			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "鉴权失败"));
@@ -345,6 +355,7 @@ public class ConfigSearchController {
 				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "鉴权中gid字段不能为空 "));
 		}
+		String uid = cookieMap.get("uid");//获取用户的uid
 		logger.info("客户端查询的游戏ID是：" + gameId);
 		ExchangeBean exchBean = null;
 		exchBean = RedisMethonds.getExchangeBean("act_exchange_"+gameId);
@@ -358,6 +369,14 @@ public class ConfigSearchController {
 				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "ConfigSearchController /exch接口  没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));				
 			} else {
+				//用于查询黑名单的键值
+				String searchBlaskListKey = "blackList:"+pb.getId()+":"+pb.getGameId()+":"+uid;
+				String isInBlaskList = RedisMethonds.get(searchBlaskListKey);
+				logger.info("查询黑名单的键值： "+searchBlaskListKey +"   查询结果： "+isInBlaskList);
+				if(isInBlaskList != null && isInBlaskList.length() > 0)
+					return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+							.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
+				
 				exchBean = gameConfigService.selectExchBean(gameName);
 				if (exchBean == null) {
 					return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker

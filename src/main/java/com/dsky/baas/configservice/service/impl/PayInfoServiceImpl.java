@@ -35,7 +35,7 @@ import com.dsky.baas.configservice.statistics.dao.PayInfoMapper;
 public class PayInfoServiceImpl implements IPayInfoService {
 	@Autowired
 	private PayInfoMapper payInfoMapper;
-	private static final Logger logger = Logger.getLogger(ActInfoServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(PayInfoServiceImpl.class);
 
 	@Override
 	public List<PayInfoBean> selectPayInfo(String gameId, String actId,String beginTime,String endTime) {

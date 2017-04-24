@@ -27,7 +27,7 @@ h2.title em{color:#880084;}
 /* content */
 
 .mainWrap{margin-left:220px;}
-.sidebar{color:#7b7b7b;line-height:39px;width:220px;margin-left:-220px;float:left;padding-top:15px;background:#222;min-height:600px;}
+.sidebar{color:#7b7b7b;line-height:39px;width:220px;margin-left:-220px;float:left;padding-top:15px;background:#222;min-height:900px;}
 .sidebar h3{padding-left:62px;background:url("img/sub-icon.png") no-repeat;}
 .sidebar h3.yh{background-position: 31px 10px;}
 .sidebar h3.yx{background-position: 31px -48px;}
@@ -69,31 +69,31 @@ h2.title em{color:#880084;}
 .Content-Left{
     height:auto;
     width:750px;
-    margin:10px;/*设置元素跟其他元素的距离为20像素*/
-    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+    margin:10px;/*锟斤拷锟斤拷元锟截革拷锟斤拷锟斤拷元锟截的撅拷锟斤拷为20锟斤拷锟斤拷*/
+    float:left;/*锟斤拷锟矫革拷锟斤拷锟斤拷实锟街讹拷锟斤拷效锟斤拷div+Css锟斤拷锟斤拷锟叫猴拷锟斤拷要锟斤拷*/
 
 }
 .Content-Main{
     height:auto;
     width:750px;
-    margin:10px;/*设置元素跟其他元素的距离为20像素*/
+    margin:10px;/*锟斤拷锟斤拷元锟截革拷锟斤拷锟斤拷元锟截的撅拷锟斤拷为20锟斤拷锟斤拷*/
     margin-left:10px;
-    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+    float:left;/*锟斤拷锟矫革拷锟斤拷锟斤拷实锟街讹拷锟斤拷效锟斤拷div+Css锟斤拷锟斤拷锟叫猴拷锟斤拷要锟斤拷*/
 }
 
 .Content-pic1{
     height:auto;
     width:500px;
-    margin:50px;/*设置元素跟其他元素的距离为20像素*/
-    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+    margin:50px;/*锟斤拷锟斤拷元锟截革拷锟斤拷锟斤拷元锟截的撅拷锟斤拷为20锟斤拷锟斤拷*/
+    float:left;/*锟斤拷锟矫革拷锟斤拷锟斤拷实锟街讹拷锟斤拷效锟斤拷div+Css锟斤拷锟斤拷锟叫猴拷锟斤拷要锟斤拷*/
 
 }
 .Content-pic2{
     height:auto;
     width:500px;
-    margin:50px;/*设置元素跟其他元素的距离为20像素*/
+    margin:50px;/*锟斤拷锟斤拷元锟截革拷锟斤拷锟斤拷元锟截的撅拷锟斤拷为20锟斤拷锟斤拷*/
     margin-left:60px;
-    float:left;/*设置浮动，实现多列效果，div+Css布局中很重要的*/
+    float:left;/*锟斤拷锟矫革拷锟斤拷锟斤拷实锟街讹拷锟斤拷效锟斤拷div+Css锟斤拷锟斤拷锟叫猴拷锟斤拷要锟斤拷*/
 }
 
 

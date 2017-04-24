@@ -1253,7 +1253,7 @@ public class OrderController {
 		model.addAttribute("gameId", gameId);
 		model.addAttribute("gameName", gameName);
 		if(gameId == null || "".equals(gameId)) {
-			return "forumlist";
+			return "commentlist";
 		}else {
 			String result = userInfoService.getForumInfo(actId, gameId, (page - 1) * pageSize, pageSize);
 			logger.info("收到的返回结果是： "+result);
@@ -1275,7 +1275,7 @@ public class OrderController {
 					logger.info("page="+page+"  pages= "+pages+"  totalCount= "+totalCount);
 				}
 			} else {
-				return "forumlist";
+				return "commentlist";
 			}
 			ForumBean fb = null;
 			List<ForumBean> list = null;
@@ -1321,7 +1321,7 @@ public class OrderController {
 		}
 		model.addAttribute("page", page);
 		model.addAttribute("pageSize", pageSize);
-		return "forumlist";
+		return "commentlist";
 	}
 	
 	@RequestMapping(value = "/promoter/forumreply", method = { RequestMethod.GET,

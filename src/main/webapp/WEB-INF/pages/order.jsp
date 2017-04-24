@@ -81,7 +81,7 @@
 								<th><span class="checkbox" id="checkAll" ></span></th>
 								<th>申请单编号</th>
 								<th>申请单创建时间</th>
-								<th>游戏名称</th>
+								<th>支付宝账号</th>
 								<th>游戏角色名</th>
 								<th>游戏级数</th>
 								<th>在线时长</th>
@@ -97,7 +97,7 @@
 								<td ><span name="checkme" status="${list.status}" class="checkbox"></span></td>
 								<td>${list.orderId}</td>
 								<td>${list.orderCreatedDate }</td>
-								<td>${list.gameName}</td>
+								<td>${list.amount}</td>
 								<td>${list.userMemo}</td>
 								<td>${list.level}</td>
 								<td>${list.onlineTime}</td>
@@ -159,10 +159,10 @@
 				    <c:forEach  var="index" begin="1" end="${pages}" step="1">
 				       <c:choose>
 				           <c:when test="${((index-page< 0 ? page-index:index-page)< 4) or index == 1  }">
-				               <c:choose>  
+				               <c:choose>
                                   <c:when test="${index==page }">
                                         <a href="<%=request.getContextPath()%>/promoter/orderajax?page=${index}&pageSize=${pageSize}&searchGameName=${currentGameName}" class="cur">${index}</a>
-                                  </c:when>  
+                                  </c:when>
                                   <c:otherwise>
                                         <a href="<%=request.getContextPath()%>/promoter/orderajax?page=${index}&pageSize=${pageSize}&searchGameName=${currentGameName}" >${index}</a>
                                   </c:otherwise>  

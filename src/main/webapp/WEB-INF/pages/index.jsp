@@ -12,17 +12,15 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <title>推广员后台管理系统</title>
 <link href="<%=request.getContextPath()%>/resources/css/reset.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet"type="text/css" href="<%=request.getContextPath()%>/resources/css/reveal.css">
+<link href="<%=request.getContextPath()%>/resources/css/reveal.css" rel="stylesheet"type="text/css">
 <link href="<%=request.getContextPath()%>/resources/css/layout-ms.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<link href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
 	<div class="header">
 		<h1>
-			<span><img
-				src="<%=request.getContextPath()%>/resources/images/logo.png"
-				alt="iDreamsky" title="iDreamsky"></span>
+			<span><img src="<%=request.getContextPath()%>/resources/images/logo.png" alt="iDreamsky" title="iDreamsky"></span>
 		</h1>
 		<h2 class="title">
 			<em>业务推广员系统</em>-资源管理后台

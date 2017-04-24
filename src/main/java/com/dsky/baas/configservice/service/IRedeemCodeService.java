@@ -1,7 +1,9 @@
 package com.dsky.baas.configservice.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Component;
+
 import com.dsky.baas.configservice.model.GameRedeemCodeBean;
 @Component
 public interface IRedeemCodeService {
@@ -11,6 +13,7 @@ public interface IRedeemCodeService {
     public int updateRedeemCodeById(GameRedeemCodeBean gameRedeemCodeBean);
     public int insertRedeemCode(GameRedeemCodeBean gameRedeemCodeList);
     public int deleteRedeemCodeById(int id);
+    public int deleteRedeemCode(int gameId,int actId,int status,int searchScore);
     public int insertRedeemCodeBatch(List<GameRedeemCodeBean> list);
     public List<String> getScoreDistinct(int gameId,int actId);
     public int ifRedeemCodeExists(int gameId,int actId,String code);

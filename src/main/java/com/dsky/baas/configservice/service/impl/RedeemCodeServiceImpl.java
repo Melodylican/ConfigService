@@ -100,9 +100,6 @@ public class RedeemCodeServiceImpl implements IRedeemCodeService {
 		return redeemCodeMapper.ifRedeemCodeExists(map);
 	}
 
-	/*(non-Javadoc)
-	 * @see com.dsky.baas.configservice.service.IRedeemCodeService#ifRedeemCodeExistsUpdate(int, int, java.lang.String, int)
-	 */
 	@Override
 	public int ifRedeemCodeExistsUpdate(int gameId, int actId, String code,
 			int id) {
@@ -112,6 +109,17 @@ public class RedeemCodeServiceImpl implements IRedeemCodeService {
 		map.put("code", code);
 		map.put("id", id);
 		return redeemCodeMapper.ifRedeemCodeExistsUpdate(map);
+	}
+
+	@Override
+	public int deleteRedeemCode(int gameId, int actId, int status,int searchScore) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("gameId", gameId);
+		map.put("actId", actId);
+		map.put("status", status);
+		map.put("score", searchScore);
+		map.put("delTime", System.currentTimeMillis()/1000);
+		return redeemCodeMapper.deleteRedeemCode(map);
 	}
 
 }

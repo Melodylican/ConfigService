@@ -331,6 +331,6 @@
 	</delete>
 	<delete id="deleteIntegralSchemeById" parameterType="java.lang.Integer">
 		delete from tb_integralscheme
-		where id = #{id,jdbcType=INTEGER}
+		where game_id = #{gameId,jdbcType=INTEGER} and act_id = #{actId,jdbcType=INTEGER} and score = #{score,jdbcType=INTEGER} and status = #{status,jdbcType=INTEGER}
 	</delete>
 </mapper>

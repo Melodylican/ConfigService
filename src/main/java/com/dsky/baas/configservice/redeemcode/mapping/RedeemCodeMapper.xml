@@ -105,10 +105,22 @@
 		update game_redeem_code
 		<set>
 			<if test="delTime != null">
-				delete_time = #{delTime}
+				delete_time = #{delTime},
 			</if>
+			status=2
 		</set>
 		where id = #{id}
 	</update>
 	
+	<update id="deleteRedeemCode" parameterType="java.lang.Integer">
+		update game_redeem_code
+		<set>
+			<if test="delTime != null">
+				delete_time = #{delTime},
+			</if>
+			status=2
+		</set>
+		where game_id = #{gameId} and act_id = #{actId} and score = #{score} and status = #{status}
+		
+	</update>
 </mapper>

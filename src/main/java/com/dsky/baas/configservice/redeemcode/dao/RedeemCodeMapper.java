@@ -17,6 +17,7 @@ public interface RedeemCodeMapper {
     int updateRedeemCodeById(GameRedeemCodeBean gameRedeemCodeBean);
     int insertRedeemCode(GameRedeemCodeBean gameRedeemCodeList);
     int deleteRedeemCodeById(Map<String,Object> map);
+    int deleteRedeemCode(Map<String,Object> map);
     int insertRedeemCodeBatch(List<GameRedeemCodeBean> list);
     List<String> getScoreDistinct(Map<String,Object> map);
     int ifRedeemCodeExists(Map<String,Object> map);

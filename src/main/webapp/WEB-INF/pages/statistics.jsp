@@ -75,6 +75,7 @@
 									结束时间：<input type="text" id="datetimepicker_dark2" placeholder="点击选择日期时间" name="endTime1" value="${endTime1}" class="iText" />
 								</p>
 								<input type="submit" value="查询" class="btn" />
+								<a href="<%=request.getContextPath()%>/statistics/export?gameId=${gameId}&actId=${actId}&beginTime=${beginTime1}&endTime={endTime1}&pic=pic1" style="background-color:green" class="btn">导出Excel</a>
 							</div>
 					        <div id="container1" style="width: 600px; height: 400px; margin: 0 auto "><c:if test="${not empty pic1msg }">${pic1msg }</c:if></div>
 					    </div>
@@ -88,6 +89,7 @@
 									结束时间：<input type="text" id="datetimepicker_dark4" placeholder="点击选择日期时间" name="endTime2" value="${endTime2 }" class="iText" />
 								</p>
 								<input type="submit" value="查询" class="btn" />
+								<a href="<%=request.getContextPath()%>/statistics/export?gameId=${gameId}&actId=${actId}&beginTime=${beginTime2}&endTime={endTime2}&pic=pic2" style="background-color:green" class="btn">导出Excel</a>
 							</div>
 					        <div id="container2" style="width: 600px; height: 400px; margin: 0 auto"><c:if test="${not empty pic2msg }">${pic2msg }</c:if></div>
 					    </div>
@@ -101,6 +103,7 @@
 									结束时间：<input type="text" id="datetimepicker_dark6" placeholder="点击选择日期时间" name="endTime3" value="${endTime3}" class="iText" />
 								</p>
 								<input type="submit" value="查询" class="btn" />
+								<a href="<%=request.getContextPath()%>/statistics/export?gameId=${gameId}&actId=${actId}&beginTime=${beginTime3}&endTime={endTime3}&pic=pic3" style="background-color:green" class="btn">导出Excel</a>
 							</div>
 					        <div id="container3" style="width: 750px; height: 450px; margin: 0 auto"><c:if test="${not empty pic3msg}">${pic3msg }</c:if></div>
 					    </div>				    

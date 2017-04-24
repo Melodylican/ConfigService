@@ -293,11 +293,31 @@ public class RedeemCodeController {
 	 * @return String   
 	 * @throws
 	 */
+	@RequestMapping(value = "/redeem/deleteall", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
+	public String deleteRedeemAll(HttpServletRequest request, Model model)
+			throws InterruptedException {
+		logger.info("UserConfigController  -->   【/redeem/delete】");
+		//设置兑换码的删除时间 并且将状态改成2
+		// 获得总行数
+        int gameId = Integer.parseInt(request.getParameter("gameId"));
+        int actId = Integer.parseInt(request.getParameter("actId"));
+		String gameName = request.getParameter("gameName");
+		int status = Integer.parseInt(request.getParameter("status"));
+		int searchScore = Integer.parseInt(request.getParameter("searchScore"));
+
+		int i = redeemCodeService.deleteRedeemCode(gameId,actId,status,searchScore);
+		logger.info("删除的结果为："+i);
+		logger.info("传递的游戏名是："+gameName+" gameId: "+gameId);
+		return "forward:/redeem/list?gameId="+gameId+"&gameName="+gameName+"&actId="+actId+"&status="+status;
+	}
+	
 	@RequestMapping(value = "/redeem/delete", method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
 	public String deleteRedeem(HttpServletRequest request, Model model)
 			throws InterruptedException {
 		logger.info("UserConfigController  -->   【/redeem/create】");
+		//设置兑换码的删除时间 并且将状态改成2
 		// 获得总行数
         String gameId = request.getParameter("gameId");
         String actId = request.getParameter("actId");

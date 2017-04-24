@@ -123,7 +123,10 @@
 						<input type="submit" value="查询" class="btn" />
 						<a href="<%=request.getContextPath()%>/redeem/create?gameName=${gameName}&gameId=${gameId}&actId=${actId}" class="btn">新建</a>
 						<a href="<%=request.getContextPath()%>/redeem/importpage?page=${page}&pageSize=${pageSize}&actId=${actId}&gameId=${gameId}&gameName=${gameName}&beginTime=${beginTime}&endTime=${endTime}" class="btn">导入</a>
-					</form>
+						<c:if test="${status==1 }">
+							<a href="<%=request.getContextPath()%>/redeem/deleteall?actId=${actId}&gameId=${gameId}&gameName=${gameName}&status=${status}&searchScore=${searchScore}" class="btn">一键删除</a>
+                        </c:if>
+					    </form>
 				</div>
 			</c:if>
 			<div class="wrap">

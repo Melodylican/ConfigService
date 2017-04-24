@@ -1,6 +1,8 @@
 package com.dsky.baas.configservice.controller;
 
+import java.rmi.ConnectException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,18 +11,27 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.RemoteAccessException;
+import org.springframework.remoting.RemoteLookupFailureException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.dsky.baas.configservice.logservice.IWarningReporterService;
 import com.dsky.baas.configservice.model.ActInfoBean;
+import com.dsky.baas.configservice.model.OrderBean;
 import com.dsky.baas.configservice.model.PayInfoBean;
 import com.dsky.baas.configservice.model.Statistics;
 import com.dsky.baas.configservice.service.IActInfoService;
 import com.dsky.baas.configservice.service.IGameConfigService;
 import com.dsky.baas.configservice.service.IPayInfoService;
+import com.dsky.baas.configservice.util.DateUtil;
 import com.dsky.baas.configservice.util.StatisticsUtils;
+import com.dsky.baas.pointsservice.model.ExchangeOrder;
 /**
  * @ClassName: StatisticsController
  * @Description: (用于统计数据的展示)
@@ -35,6 +46,16 @@ public class StatisticsController {
 	private IActInfoService actInfoService;
 	@Autowired
 	private IPayInfoService payInfoService;
+	
+	@Resource
+	private IWarningReporterService warningReporterService;
+	
+	@Autowired
+	public void setWarningReporterService(
+			IWarningReporterService warningReporterService) {
+		this.warningReporterService = warningReporterService;
+	}	
+	
 	@Autowired
 	public void setGameConfigService(IGameConfigService gameConfigService) {
 		this.gameConfigService = gameConfigService;
@@ -140,5 +161,70 @@ public class StatisticsController {
 			model.addAttribute("beginTime3", beginTime3);
 		model.addAttribute("endTime3", endTime3);		
 		return "statistics";
+	}
+	
+	/**
+	 *将统计数据导出excel 
+	 * @return
+	 */
+	@RequestMapping(value = "/statistics/export", method = RequestMethod.GET)
+	public ModelAndView getStatisticsExcel(HttpServletRequest request) {
+		//List<Animal> animalList = animalService.getAnimalList();
+		
+		logger.info("StatisticsController  -->   【/statistics/export】");
+		String gameId = request.getParameter("gameId");
+		String actId = request.getParameter("actId");
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		String pic = request.getParameter("pic");
+		System.out.println("收到的pic请求参数： "+pic);
+		logger.info("接收到传递参数为：gameId = "+gameId+"  actId = "+actId);
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
+		String nowTime = sf.format(new Date());
+		if(endTime == null || "".equals(endTime))
+			endTime = nowTime;
+		if(beginTime == null || "".equals(beginTime))
+			beginTime ="0";
+/*		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String searchGameName = request.getParameter("searchGameName");
+		logger.info("导出时传递的游戏名称是："+searchGameName);
+		String userName = userDetails.getUsername();// 查询当前登录用户名
+		// 获取拥有权限的游戏名列表
+		String gameNames = gameConfigService.selectUserGameType(userName);
+
+		String[] gameNameArr = null;
+		if (gameNames == null || gameNames.equals("")) {
+			logger.info("当前账号可操作的游戏为空  ");
+		} else {
+			gameNameArr = gameNames.split(",");
+		}
+*/
+		logger.info("======gameId=" + gameId);
+
+
+		try {
+			//获取数据
+			if(pic.equals("pic1")) {
+				List<PayInfoBean> list = payInfoService.selectPayInfo(gameId, actId,beginTime,endTime);
+				return new ModelAndView("StatisticsPic1Excel", "statisticspic1", list);
+				
+			} else {
+				List<ActInfoBean> list = actInfoService.selectActInfo(gameId, actId,beginTime,endTime);
+				if(pic.equals("pic2"))
+					return new ModelAndView("StatisticsPic2Excel", "statisticspic2", list);
+				else
+					return new ModelAndView("StatisticsPic3Excel", "statisticspic3", list);
+
+			}
+			
+		}catch (Exception e) {
+			logger.error("statistics/export 调用 【获取游戏数据的过程中出现异常】出现异常\n"
+					+ e.getMessage(),e);
+			warningReporterService.reportWarnString("statistics/export 调用 【获取游戏数据的过程中出现异常】出现异常\n"
+					+ e.getMessage());		
+		}
+		return null;
+
 	}
 }
