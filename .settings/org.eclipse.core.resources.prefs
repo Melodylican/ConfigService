@@ -4,4 +4,5 @@ encoding//src/main/resources/config.properties_online=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/forumlist.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/login.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/loginPage.jsp=UTF-8
+encoding//src/main/webapp/resources/css/layout-ms.css=UTF-8
 encoding/<project>=UTF-8

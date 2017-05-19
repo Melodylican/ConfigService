@@ -31,6 +31,12 @@ public class ReplyForumBean {
 	private String from_uid;
 	private String to_uid;
 	private String createtime;
+	private int istop;
+	private String extend_2;
+	private String deletetime;
+	private String updatetime;
+	private String extend;
+	
 
 	public String getCid() {
 		return cid;
@@ -95,12 +101,44 @@ public class ReplyForumBean {
 	public void setGid(String gid) {
 		this.gid = gid;
 	}
+	public int getIstop() {
+		return istop;
+	}
+	public void setIstop(int istop) {
+		this.istop = istop;
+	}
+	public String getExtend_2() {
+		return extend_2;
+	}
+	public void setExtend_2(String extend_2) {
+		this.extend_2 = extend_2;
+	}
+	public String getDeletetime() {
+		return deletetime;
+	}
+	public void setDeletetime(String deletetime) {
+		this.deletetime = deletetime;
+	}
+	public String getUpdatetime() {
+		return updatetime;
+	}
+	public void setUpdatetime(String updatetime) {
+		this.updatetime = updatetime;
+	}
+	public String getExtend() {
+		return extend;
+	}
+	public void setExtend(String extend) {
+		this.extend = extend;
+	}
 	@Override
 	public String toString() {
 		return "ReplyForumBean [gid=" + gid + ", cid=" + cid + ", rstat="
 				+ rstat + ", rid=" + rid + ", content=" + content
 				+ ", from_nickname=" + from_nickname + ", to_nickname="
 				+ to_nickname + ", from_uid=" + from_uid + ", to_uid=" + to_uid
-				+ ", createtime=" + createtime + "]";
+				+ ", createtime=" + createtime + ", istop=" + istop
+				+ ", extend_2=" + extend_2 + ", deletetime=" + deletetime
+				+ ", updatetime=" + updatetime + ", extend=" + extend + "]";
 	}
 }

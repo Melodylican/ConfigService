@@ -23,15 +23,19 @@ import com.dsky.baas.configservice.util.DateUtil;
  * @版本：V1.0
  */
 public class ForumBean {
-	private String userId;
-	private String cid;
-	private String tid;
-	private String content;
-	private String nickname;
-	private String gameId;
-	private String createTime;
-	private String cstat;
-	private String extend;
+	private String userId; 
+	private String cid; //评论ID
+	private String tid; //主题ID
+	private String content; //评论类容
+	private String nickname; //用户昵称
+	private String gameId; //游戏ID
+	private String createTime; //评论发表时间
+	private String cstat; //评论状态
+	private String extend; //扩展字段
+	private int isTop;  //评论置顶
+	private String extend_2; //扩张字段
+	private String updatetime;//更新时间
+	private String deletetime;//删除时间
 	private List<ReplyForumBean> rfb;
 	
 	public ForumBean(){}
@@ -48,7 +52,7 @@ public class ForumBean {
 	 * @param cstat
 	 */
 	public ForumBean(String userId, String cid, String content,
-			String nickname, String gameId, String createTime, String cstat,String tid,String extend) {
+			String nickname, String gameId, String createTime, String cstat,String tid,String extend,int isTop) {
 		super();
 		this.userId = userId;
 		this.cid = cid;
@@ -59,6 +63,7 @@ public class ForumBean {
 		this.cstat = cstat;
 		this.tid = tid;
 		this.extend = extend;
+		this.isTop = isTop;
 	}
 
 	public String getTid() {
@@ -129,12 +134,46 @@ public class ForumBean {
 		this.extend = extend;
 	}
 
+	public int getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(int isTop) {
+		this.isTop = isTop;
+	}
+
+	public String getExtend_2() {
+		return extend_2;
+	}
+
+	public void setExtend_2(String extend_2) {
+		this.extend_2 = extend_2;
+	}
+
+	public String getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(String updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	public String getDeletetime() {
+		return deletetime;
+	}
+
+	public void setDeletetime(String deletetime) {
+		this.deletetime = deletetime;
+	}
+
 	@Override
 	public String toString() {
 		return "ForumBean [userId=" + userId + ", cid=" + cid + ", tid=" + tid
 				+ ", content=" + content + ", nickname=" + nickname
 				+ ", gameId=" + gameId + ", createTime=" + createTime
-				+ ", cstat=" + cstat + ", rfb=" + rfb + "]";
+				+ ", cstat=" + cstat + ", extend=" + extend + ", isTop="
+				+ isTop + ", extend_2=" + extend_2 + ", updatetime="
+				+ updatetime + ", deletetime=" + deletetime + ", rfb=" + rfb
+				+ "]";
 	}
-
 }

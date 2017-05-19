@@ -5,12 +5,14 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,10 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dsky.baas.configservice.logservice.IWarningReporterService;
+import com.dsky.baas.configservice.model.ActInfoBean;
 import com.dsky.baas.configservice.model.GameRedeemCodeBean;
+import com.dsky.baas.configservice.model.PayInfoBean;
 import com.dsky.baas.configservice.service.IGameConfigService;
 import com.dsky.baas.configservice.service.IRedeemCodeService;
 import com.dsky.baas.configservice.service.excel.ImportExcelUtil;
@@ -469,4 +474,44 @@ public class RedeemCodeController {
         out.flush();  
         out.close();
     }
+    
+	@RequestMapping(value = "/redeem/export", method = RequestMethod.GET)
+	public ModelAndView getStatisticsExcel(HttpServletRequest request) {
+		//List<Animal> animalList = animalService.getAnimalList();
+		
+		logger.info("RedeemCodeController  -->   【/redeem/export】");
+		String gameId = request.getParameter("gameId");
+		String actId = request.getParameter("actId");
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		String searchScore = request.getParameter("searchScore");//获取查询的积分类别
+		String status = request.getParameter("status");
+		
+		int eTime = (int)(DateUtil.parseDateFromString(endTime, "yyyy/MM/dd HH:mm", 0)/1000);
+		logger.info("结束时间是："+eTime);
+		int bTime = 0;
+		if(beginTime != null && beginTime.length() >0) {
+			bTime = (int)(DateUtil.parseDateFromString(beginTime, "yyyy/MM/dd HH:mm", 0)/1000);
+			logger.info("开始时间是："+bTime);
+		}
+
+		logger.info("======gameId=" + gameId+"   beginTime = "+beginTime+"    endTime = "+endTime);
+		try {
+			if(NumberUtils.isNumber(gameId) && NumberUtils.isNumber(actId)) {
+			//获取数据
+				List<GameRedeemCodeBean> list = redeemCodeService.exportRedeemCode(Integer.parseInt(gameId), Integer.parseInt(actId),searchScore,status,bTime,eTime);
+				logger.info("传递的参数是： ");
+				return new ModelAndView("RedeemCodeListView", "list", list);
+			}
+		}catch (Exception e) {
+			logger.error("redeem/export  【导出数据的过程中出现异常】出现异常\n"
+					+ e.getMessage(),e);
+			warningReporterService.reportWarnString("redeem/export  【导出数据的过程中出现异常】出现异常\n"
+					+ e.getMessage());		
+		}
+		return null;
+
+	}
+    
+    
 }

@@ -38,4 +38,6 @@ public interface IPointsLogService {
 	 */
 	public int getPonitsLogCount(int uid, int gid);
 	public int getPonitsLogCount(int uid, int gid,boolean from,int DateFrom,boolean to,int DateTo);
+	//后台需要总分
+	public int getPoints(int uid,int gid,int actid);
 }

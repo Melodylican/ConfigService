@@ -28,9 +28,11 @@ public class PassedOrderListView extends AbstractExcelView {
 		setBorder.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
 		
 		List<OrderBean> orderList = (List<OrderBean>) model.get("orderList");
-		logger.info("orderList "+orderList.size());
-		setExcelRows(excelSheet,orderList);
-		setColumnWidth(excelSheet);
+		if(orderList != null) {
+			logger.info("orderList "+orderList.size());
+			setExcelRows(excelSheet,orderList);
+			setColumnWidth(excelSheet);
+		}
 		
 	}
 

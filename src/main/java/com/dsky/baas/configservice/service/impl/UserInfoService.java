@@ -40,6 +40,12 @@ public class UserInfoService implements IUserInfo {
 	private String userInfoUrl;//获取用户信息的api
 	private String forumUrl;//获取用户吐槽信息的api //192.168.4.115:9999/commentsandreplies?tid=1&gid=11292&offset=2&pagesize=1
 	private String forumReply;//官方回复用户吐槽信息的api
+	private String move2top;//置顶api
+	private String cancleMove2top;//取消置顶api
+	private String deleteForum;//删除某条吐槽的api
+	private String deleteForumReply;//删除某条吐槽回复的api
+	private String updateForumReply;//修改每条吐槽回复的api
+	private String shortMsgUrl;
 	private static final Logger logger = Logger.getLogger(UserInfoService.class);
 	public String getUserInfoUrl() {
 		return userInfoUrl;
@@ -63,6 +69,54 @@ public class UserInfoService implements IUserInfo {
 
 	public void setForumReply(String forumReply) {
 		this.forumReply = forumReply;
+	}
+	
+	public String getMove2top() {
+		return move2top;
+	}
+
+	public void setMove2top(String move2top) {
+		this.move2top = move2top;
+	}
+
+	public String getCancleMove2top() {
+		return cancleMove2top;
+	}
+
+	public void setCancleMove2top(String cancleMove2top) {
+		this.cancleMove2top = cancleMove2top;
+	}
+	
+	public String getDeleteForum() {
+		return deleteForum;
+	}
+
+	public void setDeleteForum(String deleteForum) {
+		this.deleteForum = deleteForum;
+	}
+
+	public String getDeleteForumReply() {
+		return deleteForumReply;
+	}
+
+	public void setDeleteForumReply(String deleteForumReply) {
+		this.deleteForumReply = deleteForumReply;
+	}
+	
+	public String getUpdateForumReply() {
+		return updateForumReply;
+	}
+
+	public void setUpdateForumReply(String updateForumReply) {
+		this.updateForumReply = updateForumReply;
+	}
+	
+	public String getShortMsgUrl() {
+		return shortMsgUrl;
+	}
+
+	public void setShortMsgUrl(String shortMsgUrl) {
+		this.shortMsgUrl = shortMsgUrl;
 	}
 
 	/*userInfoUrl 通过配置文件进行配置
@@ -94,8 +148,7 @@ public class UserInfoService implements IUserInfo {
             // 设置通用的请求属性
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("user-agent","Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             // 建立实际的连接
             connection.connect();
             // 获取所有响应头字段
@@ -105,8 +158,7 @@ public class UserInfoService implements IUserInfo {
                 logger.info(key + "--->" + map.get(key));
             }
             // 定义 BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -147,8 +199,7 @@ public class UserInfoService implements IUserInfo {
             // 设置通用的请求属性
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("user-agent","Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -159,8 +210,7 @@ public class UserInfoService implements IUserInfo {
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -188,7 +238,7 @@ public class UserInfoService implements IUserInfo {
     
 	@Override
 	public String getForumInfo(String actId,String gameId,int offset,int pageSize) {
-		String requestUrlParams = "actId="+actId+"&gid="+gameId+"&offset="+offset+"&pagesize="+pageSize+"&field=createtime&order=desc&rfield=createtime&rorder=asc";
+		String requestUrlParams = "actId="+actId+"&gid="+gameId+"&offset="+offset+"&pagesize="+pageSize+"&field=updatetime&order=desc&rfield=createtime&rorder=asc";
 		logger.info("访问的Url： "+this.forumUrl+" 传递的参数是："+requestUrlParams);
 		return sendGet(this.forumUrl.trim(),requestUrlParams);
 	}
@@ -199,12 +249,67 @@ public class UserInfoService implements IUserInfo {
 		try {
 			requestUrlParams = "actId="+actId+"&gid="+gameId+"&content="+URLEncoder.encode(content,"utf-8")+"&cid="+cid+"&from_uid="+from_uid+"&to_uid="+to_uid+"&from_nickname="+from_nickname+"&to_nickname="+to_nickname;
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logger.info("访问的Url： "+this.forumReply+"  传递的参数是： "+requestUrlParams);
+		logger.info("访问的Url： "+this.forumReply+"  传递的参数是： "+requestUrlParams);		
 		return sendGet(this.forumReply.trim(), requestUrlParams);
 		//return HttpUtils.httpRequest(requestUrl);
+	}
+	
+	@Override
+	public String move2top(String cid) {
+		String requestUrlParams="";
+		requestUrlParams = "cid="+cid;
+		logger.info("访问的Url： "+this.move2top+"  传递的参数是： "+requestUrlParams);
+		return sendGet(this.move2top.trim(), requestUrlParams);
+	}
+	
+	@Override
+	public String cancleMove2top(String cid) {
+		String requestUrlParams="";
+		requestUrlParams = "cid="+cid;
+		logger.info("访问的Url： "+this.cancleMove2top+"  传递的参数是： "+requestUrlParams);
+		return sendGet(this.cancleMove2top.trim(), requestUrlParams);
+	}
+
+	@Override
+	public String deleteforum(String cid) {
+		String requestUrlParams="";
+		requestUrlParams = "cid="+cid;
+		logger.info("访问的Url： "+this.deleteForum+"  传递的参数是： "+requestUrlParams);
+		return sendGet(this.deleteForum.trim(), requestUrlParams);
+	}
+
+	@Override
+	public String deleteforumreply(String rid) {
+		String requestUrlParams="";
+		requestUrlParams = "rid="+rid;
+		logger.info("访问的Url： "+this.deleteForumReply+"  传递的参数是： "+requestUrlParams);
+		return sendGet(this.deleteForumReply.trim(), requestUrlParams);
+	}
+	
+	@Override
+	public String updateforumreply(String rid,String content) {
+		String requestUrlParams="";
+		try {
+			requestUrlParams = "content="+URLEncoder.encode(content,"utf-8")+"&rid="+rid;
+			logger.info("访问的Url： "+this.updateForumReply+"  传递的参数是： "+requestUrlParams);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return sendGet(this.updateForumReply.trim(), requestUrlParams);
+	}
+	
+	@Override
+	public String sendShortMsg(String mobile,String content) {
+		String requestUrlParams="";
+		try {
+			requestUrlParams = "content="+URLEncoder.encode(content,"utf-8")+"&mobile="+mobile;
+			logger.info("访问的Url： "+this.updateForumReply+"  传递的参数是： "+requestUrlParams);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return sendPost(this.shortMsgUrl.trim(), requestUrlParams);
 	}
 
 }

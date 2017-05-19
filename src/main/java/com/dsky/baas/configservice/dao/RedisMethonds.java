@@ -1,11 +1,12 @@
 package com.dsky.baas.configservice.dao;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.dsky.baas.configservice.model.BlackListBean;
 import com.dsky.baas.configservice.model.ExchangeBean;
@@ -19,6 +20,9 @@ public class RedisMethonds {
 	private static RedisTemplate redisTemplate;
 	
 	public void setRedisTemplate(RedisTemplate redisTemplate) {
+	    RedisSerializer stringSerializer = new StringRedisSerializer();
+	    redisTemplate.setHashKeySerializer(stringSerializer);
+	    redisTemplate.setHashValueSerializer(stringSerializer);
 		this.redisTemplate = redisTemplate;
 	}
 	
@@ -37,6 +41,44 @@ public class RedisMethonds {
 			return;
 		}
 	}
+
+	public static int hashSet(String key,String field,String value) {
+
+		try{
+			if(redisTemplate.opsForHash().hasKey(key, field)) {
+				//如果redis中已经存在该键值 则进行更新
+		           redisTemplate.opsForHash().delete(key, field);
+		           logger.info("key已经存在 删除 : "+key+"然后进行更新");
+		           redisTemplate.opsForHash().put(key, field, value);
+		     }else {
+		    	 //如果redis中没有这个键值 则直接存储
+		    	 redisTemplate.opsForHash().put(key, field, value);
+		    	 logger.info("Redis 中没有对应的 Key : "+key+"   filed="+field);
+		     }
+			return 1;
+		}catch (JedisConnectionException e) {
+			logger.error("redis连接出现异常 "+e.getMessage(), e);
+			return 0;
+		}
+	}
+	
+	public static void delHashField(String key,String field) {
+
+        if(field != null )
+		try{
+			if(redisTemplate.opsForHash().hasKey(key, field)) {
+				redisTemplate.opsForHash().delete(key, field);
+		           logger.info("调用delActivitieKey 删除 : "+key);
+		     }else {
+		    	 logger.info("Redis 中没有对应的 Key : "+key);
+		     }
+		}catch (JedisConnectionException e) {
+			logger.error("redis连接出现异常 "+e.getMessage(), e);
+			return;
+		}
+	}
+	
+	
 	
 	public static int set(String key,String value) {
 		try{
@@ -200,9 +242,9 @@ public class RedisMethonds {
 			if(redisTemplate.hasKey(key)) {
 				//如果redis中已经存在该键值 则进行更新
 				   logger.info("开始获取key : "+key);
-				   List<BlackListBean> map = (List<BlackListBean>) redisTemplate.opsForValue().get(key);
-		           logger.info("redis返回 key="+key+" 的值为 value="+map.size());
-		           return map;
+				   List<BlackListBean> list = (List<BlackListBean>) redisTemplate.opsForValue().get(key);
+		           logger.info("redis返回 key="+key+" 值size大小 ="+list.size());
+		           return list;
 		     }else {
 		    	 //如果redis中没有这个键值 则直接返回空
 		    	 //redisTemplate.opsForValue().set(key, "1");//如果当前redis中没有该key的记录，则加入默认为紧急测试关闭的key

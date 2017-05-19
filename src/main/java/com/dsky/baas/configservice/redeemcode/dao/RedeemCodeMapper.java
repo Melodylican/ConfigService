@@ -22,4 +22,5 @@ public interface RedeemCodeMapper {
     List<String> getScoreDistinct(Map<String,Object> map);
     int ifRedeemCodeExists(Map<String,Object> map);
     int ifRedeemCodeExistsUpdate(Map<String,Object> map);
+    List<GameRedeemCodeBean>exportRedeemCode(Map<String,Object> map);
 }

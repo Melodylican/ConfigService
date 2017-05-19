@@ -18,5 +18,7 @@ public interface IRedeemCodeService {
     public List<String> getScoreDistinct(int gameId,int actId);
     public int ifRedeemCodeExists(int gameId,int actId,String code);
     public int ifRedeemCodeExistsUpdate(int gameId,int actId,String code,int id);
+    public List<GameRedeemCodeBean> exportRedeemCode(int gameId,int actId,String searchScore,String status,int bTime,int eTime);
+    
 
 }

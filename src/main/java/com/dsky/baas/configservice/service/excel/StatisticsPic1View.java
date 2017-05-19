@@ -29,7 +29,7 @@ public class StatisticsPic1View extends AbstractExcelView {
 		setBorder.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
 		
 		List<PayInfoBean> payInfoList = (List<PayInfoBean>) model.get("statisticspic1");
-		logger.info("orderList "+payInfoList.size());
+		logger.info("payInfoList "+payInfoList.size());
 		setExcelRows(excelSheet,payInfoList);
 		setColumnWidth(excelSheet);
 		

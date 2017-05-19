@@ -121,5 +121,16 @@ public class RedeemCodeServiceImpl implements IRedeemCodeService {
 		map.put("delTime", System.currentTimeMillis()/1000);
 		return redeemCodeMapper.deleteRedeemCode(map);
 	}
+	
+	public List<GameRedeemCodeBean> exportRedeemCode(int gameId,int actId,String searchScore,String status,int bTime,int eTime) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("gameId", gameId);
+		map.put("actId", actId);
+		map.put("status", status);
+		map.put("score", searchScore);
+		map.put("bTime", bTime);
+		map.put("eTime", eTime);
+		return redeemCodeMapper.exportRedeemCode(map);
+	}
 
 }

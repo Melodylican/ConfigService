@@ -1,8 +1,7 @@
 package com.dsky.baas.configservice.controller;
 
-import java.rmi.ConnectException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.remoting.RemoteAccessException;
-import org.springframework.remoting.RemoteLookupFailureException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,15 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dsky.baas.configservice.logservice.IWarningReporterService;
 import com.dsky.baas.configservice.model.ActInfoBean;
-import com.dsky.baas.configservice.model.OrderBean;
 import com.dsky.baas.configservice.model.PayInfoBean;
+import com.dsky.baas.configservice.model.PromoterBean;
 import com.dsky.baas.configservice.model.Statistics;
 import com.dsky.baas.configservice.service.IActInfoService;
 import com.dsky.baas.configservice.service.IGameConfigService;
 import com.dsky.baas.configservice.service.IPayInfoService;
-import com.dsky.baas.configservice.util.DateUtil;
 import com.dsky.baas.configservice.util.StatisticsUtils;
-import com.dsky.baas.pointsservice.model.ExchangeOrder;
 /**
  * @ClassName: StatisticsController
  * @Description: (用于统计数据的展示)
@@ -67,7 +62,7 @@ public class StatisticsController {
 	 * @return
 	 */
 	@RequestMapping(value = "/statistics/show", method = {RequestMethod.GET,RequestMethod.POST}, produces = "text/plain;charset=UTF-8")
-	public String createUser(HttpServletRequest request,Model model) {
+	public String show(HttpServletRequest request,Model model) {
 		logger.info("StatisticsController  -->   【/statistics/show】");
 		String gameId = request.getParameter("gameId");
 		String actId = request.getParameter("actId");
@@ -178,9 +173,10 @@ public class StatisticsController {
 		String endTime = request.getParameter("endTime");
 		String pic = request.getParameter("pic");
 		System.out.println("收到的pic请求参数： "+pic);
-		logger.info("接收到传递参数为：gameId = "+gameId+"  actId = "+actId);
+		logger.info("接收到传递参数为：gameId = "+gameId+"  actId = "+actId+"  pic = "+pic);
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
 		String nowTime = sf.format(new Date());
+		
 		if(endTime == null || "".equals(endTime))
 			endTime = nowTime;
 		if(beginTime == null || "".equals(beginTime))
@@ -200,17 +196,17 @@ public class StatisticsController {
 			gameNameArr = gameNames.split(",");
 		}
 */
-		logger.info("======gameId=" + gameId);
-
-
+		logger.info("======gameId=" + gameId+"   beginTime = "+beginTime+"    endTime = "+endTime);
 		try {
 			//获取数据
 			if(pic.equals("pic1")) {
 				List<PayInfoBean> list = payInfoService.selectPayInfo(gameId, actId,beginTime,endTime);
+				logger.info("查询的payinfo数据条数： "+list.size());
 				return new ModelAndView("StatisticsPic1Excel", "statisticspic1", list);
 				
 			} else {
 				List<ActInfoBean> list = actInfoService.selectActInfo(gameId, actId,beginTime,endTime);
+				logger.info("查询的actinfo数据条数： "+list.size());
 				if(pic.equals("pic2"))
 					return new ModelAndView("StatisticsPic2Excel", "statisticspic2", list);
 				else
@@ -227,4 +223,139 @@ public class StatisticsController {
 		return null;
 
 	}
+	
+	/**
+	 * 进入数据展示页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/statistics/singleshow", method = {RequestMethod.GET,RequestMethod.POST}, produces = "text/plain;charset=UTF-8")
+	public String singleShow(HttpServletRequest request,Model model) {
+		logger.info("StatisticsController  -->   【/statistics/singleshow】");
+		String gameId = request.getParameter("gameId");
+		String actId = request.getParameter("actId");
+		String searchGameName = request.getParameter("gameName");
+		String datatype =  request.getParameter("datatype");
+		logger.info("接收到传递参数为：gameId = "+gameId+"  actId = "+actId+"  gameName = "+searchGameName);
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
+		
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		logger.info("beginTime="+beginTime+"  endTime="+endTime);
+
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName = userDetails.getUsername();
+		System.out.println("用户名是： "+userName);
+		// 获取拥有权限的游戏名列表
+		String gameNames = gameConfigService.selectUserGameType(userName);
+		String[] gameNameArr = null;
+		if (gameNames != null) {
+			gameNameArr = gameNames.split(",");
+		} else
+			gameNameArr = new String[] {""};
+		List<String> gameNameList = Arrays.asList(gameNameArr);
+		model.addAttribute("gameNameList", gameNameList);
+		if(searchGameName == null ) {
+			searchGameName = gameNameArr[0];
+			logger.info("数据库查询的游戏名称是： "+searchGameName);
+		}
+
+		gameId = gameConfigService.getGameIdByGameName(searchGameName);
+		logger.info("通过数据库查询的游戏Id为： "+gameId);
+
+
+		PromoterBean pb = gameConfigService.selectPromoterByGameIdAndLocation(gameId, "中国大陆");
+		if(pb != null) {
+			actId = pb.getId();
+			logger.info("通过数据库查询的活动Id为： "+actId);
+		}
+
+
+		
+		String nowTime = sf.format(new Date());
+		if(endTime==null || "".equals(endTime))
+			endTime = nowTime;
+		
+		if(beginTime==null || "".equals(beginTime))
+			beginTime ="0";
+
+		if(datatype.equals("pic1")) {
+			//邀请人数及付费情况图表
+			List<PayInfoBean> listPay = payInfoService.selectPayInfo(gameId, actId,beginTime,endTime);
+			Statistics s1 = StatisticsUtils.getSeriesJson(listPay);
+			if(s1 != null) {
+				model.addAttribute("series",s1.getSeries().replace("\"", "\'"));
+				model.addAttribute("categories",s1.getCategories());
+				model.addAttribute("title", "邀请人数及付费情况");
+				model.addAttribute("yAxis", "数值(人或元)");
+				model.addAttribute("payInfolist", listPay);
+				logger.info("categories1 : "+s1.getCategories());
+				logger.info("series1 : "+ s1.getSeries().replace("\"", "\'"));
+			}else {
+				model.addAttribute("series","[{'data':[0],'name':'无数据'}]");
+				model.addAttribute("categories","['0']");	
+				model.addAttribute("title", "邀请人数及付费情况");
+				model.addAttribute("yAxis", "数值(人或元)");
+				model.addAttribute("pic1msg", "没有当前游戏对应于"+searchGameName+"("+gameId+")&nbsp;&nbsp;<font color='red' >[邀请人数及付费情况的统计]</font>&nbsp;&nbsp;的数据");
+			} 
+		} else if(datatype.equals("pic2")) {
+		
+			List<ActInfoBean> listAct2 = actInfoService.selectActInfo(gameId, actId,beginTime,endTime);
+			//分享方式统计表
+			Statistics s2 = StatisticsUtils.getSeriesJson(listAct2,"pic2");
+			if(s2 != null) {
+				model.addAttribute("series",s2.getSeries().replace("\"", "\'"));
+				model.addAttribute("categories",s2.getCategories());
+				model.addAttribute("title", "分享方式统计");
+				model.addAttribute("yAxis", "数值(人或元)");
+				model.addAttribute("actInfolist", listAct2);
+				logger.info("categories : "+s2.getCategories());
+				logger.info("series : "+ s2.getSeries().replace("\"", "\'"));
+			}else {
+				logger.info("s2中数据为空，将为其生成默认数据");
+				model.addAttribute("series","[{'data':[0],'name':'无数据'}]");
+				model.addAttribute("categories","['0']");	
+				model.addAttribute("title", "分享方式统计");
+				model.addAttribute("yAxis", "数值(人或元)");
+				model.addAttribute("pic2msg", "没有当前游戏对应于"+searchGameName+"("+gameId+")&nbsp;&nbsp;<font color='red' >[分享方式统计]</font>&nbsp;&nbsp;的数据");
+			}
+		} else if(datatype.equals("pic3")) {
+			//点击数统计表
+			List<ActInfoBean> listAct3 = actInfoService.selectActInfo(gameId, actId,beginTime,endTime);
+			
+			Statistics s3 = StatisticsUtils.getSeriesJson(listAct3,"pic3");
+			if(s3 != null) {
+				model.addAttribute("series",s3.getSeries().replace("\"", "\'"));
+				model.addAttribute("categories",s3.getCategories());
+				model.addAttribute("title", "点击数统计");
+				model.addAttribute("yAxis", "数值(次)");
+				model.addAttribute("actInfolist", listAct3);
+				logger.info("categories : "+s3.getCategories());
+				logger.info("series : "+ s3.getSeries().replace("\"", "\'"));
+			}else {
+				logger.info("s3为空中数据为空，将为其生成默认数据");
+				model.addAttribute("series","[{'data':[0],'name':'无数据'}]");
+				model.addAttribute("categories","['0']");
+				model.addAttribute("title", "点击数统计");
+				model.addAttribute("yAxis", "数值(次)");
+				model.addAttribute("pic3msg", "没有当前游戏对应于 "+searchGameName+"("+gameId+") &nbsp;&nbsp;<font color='red' >[点击数统计]</font>&nbsp;&nbsp;的数据");
+			}
+			
+		}
+		
+		model.addAttribute("gameId", gameId);
+		model.addAttribute("actId",actId);
+		model.addAttribute("gameName", searchGameName);
+		model.addAttribute("datatype", datatype);
+		if("0".equals(beginTime))
+			model.addAttribute("beginTime",null);
+		else
+			model.addAttribute("beginTime", beginTime);
+		model.addAttribute("endTime", endTime);
+	
+		return "singlestatistics";
+	}
+	
+	
+	
 }

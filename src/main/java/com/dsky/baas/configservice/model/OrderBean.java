@@ -37,6 +37,11 @@ public class OrderBean {
     private String status;
     //订单创建的时间
     private String orderCreatedDate;
+    //订单审核后的信息
+    private String operationMemo;
+    // 已邀请人数 需要通过 zen的接口获取
+    private String invitedPeople;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -133,5 +138,30 @@ public class OrderBean {
 	public void setOrderCreatedDate(String orderCreatedDate) {
 		this.orderCreatedDate = orderCreatedDate;
 	}
+	public String getOperationMemo() {
+		return operationMemo;
+	}
+	public void setOperationMemo(String operationMemo) {
+		this.operationMemo = operationMemo;
+	}
 	
+	public String getInvitedPeople() {
+		return invitedPeople;
+	}
+	public void setInvitedPeople(String invitedPeople) {
+		this.invitedPeople = invitedPeople;
+	}
+	@Override
+	public String toString() {
+		return "OrderBean [id=" + id + ", orderId=" + orderId + ", playerId="
+				+ playerId + ", gameId=" + gameId + ", gameName=" + gameName
+				+ ", planId=" + planId + ", level=" + level + ", onlineTime="
+				+ onlineTime + ", hasPoints=" + hasPoints
+				+ ", requestExchangePoints=" + requestExchangePoints
+				+ ", amount=" + amount + ", payMethod=" + payMethod
+				+ ", payInfo=" + payInfo + ", userMemo=" + userMemo
+				+ ", status=" + status + ", orderCreatedDate="
+				+ orderCreatedDate + ", operationMemo=" + operationMemo
+				+ ", invitedPeople=" + invitedPeople + "]";
+	}
 }

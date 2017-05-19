@@ -14,6 +14,7 @@ public interface GameExchangeMapper {
 	List<ExchangeBean> selectExchByPaging(Map<String, Object> map);
 	List<ExchangeBean> selectExchangeBygameName(Map<String, Object> map);
 	ExchangeBean selectExchBean(Map<String, Object> map);//对外提供查询的api
+	ExchangeBean selectExchangeById(int id);
 	String selectGameNameByGameId(String gameId); //对外提供的查询api
 	String getGameIdByGameName(String gameName);//对外提供查询的api 根据游戏名称查询游戏id
 	int selectExchangeCount(Map<String, Object> map);

@@ -31,5 +31,21 @@ public class RMIServiceImpl {
 	public int getPonitsLogCount(int uid, int gid) throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
 		return pointsLogService.getPonitsLogCount(uid, gid);
 	}
+	/**
+	 * 
+	 * 方法功能说明：用于查询该账号的总积分
+	 * 创建：2017年5月4日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param uid
+	 * @参数： @param gid
+	 * @参数： @param actid
+	 * @参数： @return    
+	 * @return int   
+	 * @throws
+	 */
+	public int getPoints(int uid,int gid,int actid){
+		return pointsLogService.getPoints(uid,gid,actid);
+	}
 
 }

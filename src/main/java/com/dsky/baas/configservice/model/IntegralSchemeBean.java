@@ -31,6 +31,15 @@ public class IntegralSchemeBean {
 	private int rechargeB;//B充值后B的奖励积分
 	private int recharge;//进行充值奖励的充值金额下限
 	
+	private int weixinClickShare;//微信分享奖励积分
+	private int weixinClickShareSuccess;//微信分享成功奖励积分
+	
+	private int qqClickShare;//qq点击分享奖励积分
+	private int qqClickShareSuccess;//qq点击分享成功奖励积分
+	
+	private int weiboClickShare;//微博点击分享奖励积分
+	private int weiboClickShareSuccess;//微博点击分享成功奖励积分
+	
 	public int getId() {
 		return id;
 	}
@@ -147,6 +156,42 @@ public class IntegralSchemeBean {
 	public void setRecharge(int recharge) {
 		this.recharge = recharge;
 	}
+	public int getWeixinClickShare() {
+		return weixinClickShare;
+	}
+	public void setWeixinClickShare(int weixinClickShare) {
+		this.weixinClickShare = weixinClickShare;
+	}
+	public int getWeixinClickShareSuccess() {
+		return weixinClickShareSuccess;
+	}
+	public void setWeixinClickShareSuccess(int weixinClickShareSuccess) {
+		this.weixinClickShareSuccess = weixinClickShareSuccess;
+	}
+	public int getQqClickShare() {
+		return qqClickShare;
+	}
+	public void setQqClickShare(int qqClickShare) {
+		this.qqClickShare = qqClickShare;
+	}
+	public int getQqClickShareSuccess() {
+		return qqClickShareSuccess;
+	}
+	public void setQqClickShareSuccess(int qqClickShareSuccess) {
+		this.qqClickShareSuccess = qqClickShareSuccess;
+	}
+	public int getWeiboClickShare() {
+		return weiboClickShare;
+	}
+	public void setWeiboClickShare(int weiboClickShare) {
+		this.weiboClickShare = weiboClickShare;
+	}
+	public int getWeiboClickShareSuccess() {
+		return weiboClickShareSuccess;
+	}
+	public void setWeiboClickShareSuccess(int weiboClickShareSuccess) {
+		this.weiboClickShareSuccess = weiboClickShareSuccess;
+	}
 	@Override
 	public String toString() {
 		return "IntegralSchemeBean [id=" + id + ", register=" + register
@@ -159,7 +204,11 @@ public class IntegralSchemeBean {
 				+ ", promoterBThird=" + promoterBThird + ", promoterATime="
 				+ promoterATime + ", promoterALevel=" + promoterALevel
 				+ ", redeemCode=" + redeemCode + ", rechargeA=" + rechargeA
-				+ ", rechargeB=" + rechargeB + ", recharge=" + recharge + "]";
+				+ ", rechargeB=" + rechargeB + ", recharge=" + recharge
+				+ ", weixinClickShare=" + weixinClickShare
+				+ ", weixinClickShareSuccess=" + weixinClickShareSuccess
+				+ ", qqClickShare=" + qqClickShare + ", qqClickShareSuccess="
+				+ qqClickShareSuccess + ", weiboClickShare=" + weiboClickShare
+				+ ", weiboClickShareSuccess=" + weiboClickShareSuccess + "]";
 	}
-
 }

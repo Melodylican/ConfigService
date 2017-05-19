@@ -69,5 +69,80 @@ public interface IUserInfo {
 	public String replyForum(String actId,String gameId, String content,String cid,
 			String from_uid, String to_uid, String from_nickname,
 			String to_nickname);
+	/**
+	 * 方法功能说明：用于消息置顶
+	 * 创建：2017年4月28日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param cid
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String move2top(String cid);
+	/**
+	 * 方法功能说明：用于取消消息置顶
+	 * 创建：2017年4月28日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param cid
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String cancleMove2top(String cid);
+	/**
+	 * 
+	 * 方法功能说明：处理删除某条吐槽或者回复的功能
+	 * 创建：2017年4月28日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param cid
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String deleteforum(String cid);
+	/**
+	 * 
+	 * 方法功能说明：删除吐槽的某条回复
+	 * 创建：2017年4月28日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param rid
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String deleteforumreply(String rid);
+	
+	/**
+	 * 方法功能说明：支持对某条回复进行修改
+	 * 创建：2017年4月29日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param rid
+	 * @参数： @param content
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String updateforumreply(String rid,String content);
+	/**
+	 * 方法功能说明：调用发送短信的方法
+	 * 创建：2017年5月5日 by chris.li 
+	 * 修改：日期 by 修改者
+	 * 修改内容：
+	 * @参数： @param mobile
+	 * @参数： @param content
+	 * @参数： @return    
+	 * @return String   
+	 * @throws
+	 */
+	public String sendShortMsg(String mobile,String content);
 
 }
+
+
+
+

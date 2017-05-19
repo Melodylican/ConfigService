@@ -69,6 +69,7 @@ public interface IGameConfigService {
 	public int selectExchangeCount(String gameName,String exchBeginTime,String exchEndTime,
 			String createdBy,String userRole);
 	public ExchangeBean selectExchBean(String gameName);//对外提供查询兑换配置的api
+	public ExchangeBean selectExchangeById(int id);
 	public String selectGameNameByGameId(String gameId);//对外提供查询兑换配置的api
 	public String getGameIdByGameName(String gameName);
 	

@@ -49,5 +49,9 @@ public class ExchRMIServiceImpl {
 	public int getExchangeOrderTotalNum(int gameId,String status)throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
 		return iExchangeOrderService.getExchangeOrderTotalNum(gameId, status);
 	}
+	
+	public ExchangeOrder getExchangeOrderByOrderId(String orderId){
+		return iExchangeOrderService.getExchangeOrderByOrderId(orderId);
+	}
 
 }

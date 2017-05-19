@@ -16,4 +16,6 @@ public interface IExchangeOrderService {
 	public int updateExchangeOrderStatus(String orderId,String status,String operation_memo);
 	public int updateExchangeOrderStatusByQuantity(String []orderId,String status);//批量通过
 	public int getExchangeOrderTotalNum(int gameId,String status);//获取已通过订单的总行数
+	//根据订单号查询订单信息
+	public ExchangeOrder getExchangeOrderByOrderId(String orderId);
 }

@@ -390,6 +390,11 @@ public  class GameConfigServiceImpl implements IGameConfigService {
 		return gameMapper.deleteGameById(id);
 	}
 
+	@Override
+	public ExchangeBean selectExchangeById(int id) {
+		return gameExchangeMapper.selectExchangeById(id);
+	}
+
 
 
 
