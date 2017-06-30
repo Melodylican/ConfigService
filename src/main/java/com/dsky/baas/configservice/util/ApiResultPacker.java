@@ -135,7 +135,7 @@ public class ApiResultPacker {
 		
 		data.put("state", promoterBean.getState());
 		data.put("exchStandard1",exch.getExchStandard1());
-		data.put("exchStandard1",exch.getExchStandard2());
+		data.put("exchStandard2",exch.getExchStandard2());
 		Map<String,Object> ext = new HashMap<String,Object>();
 		haveGameConfig.setData(data);
 		haveGameConfig.setExt(ext);

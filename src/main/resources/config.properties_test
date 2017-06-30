@@ -1,0 +1,90 @@
+#REDIS驱动
+#####################公共环境配置##################
+redis.maxIdle=5
+redis.maxActive=500
+redis.maxWait=1000
+redis.timeout=15000
+redis.testOnBorrow=false
+
+jdbc.class.name=com.mysql.jdbc.Driver
+db.database=promoter
+validationQuery=SELECT 1
+
+#对外提供RMI服务的配置-为兑换码服务
+rmi.serviceInterface=com.dsky.baas.configservice.rmi.IGameConfig
+rmi.serviceName=remoteService
+rmi.registryPort=9500
+rmi.servicePort=9501
+
+#对外提供RMI服务的配置-为积分计算提供服务
+rmi.exch.serviceInterface=com.dsky.baas.configservice.rmi.IGameExchConfig
+rmi.exch.serviceName=remoteExchService
+rmi.exch.registryPort=9600
+rmi.exch.servicePort=9601
+####################测试环境配置###################
+
+#测试环境 redis
+redis.host=192.168.2.44
+redis.port=6378
+redis.pass=123456
+
+#测试环境 数据库
+db.ip=192.168.2.44
+db.port=3317
+db.user=root
+db.password=123456
+
+#测试环境 兑换码库配置
+db.redeemcode.ip=192.168.2.44
+db.redeemcode.port=3317
+db.redeemcode.user=root
+db.redeemcode.password=123456
+db.redeemcode.database=point_service
+
+#测试环境 数据统计数据库
+db.statistics.ip=192.168.2.44
+db.statistics.port=3317
+db.statistics.user=root
+db.statistics.password=123456
+db.statistics.database=promoter_statistic
+
+#测试环境
+user.db.driver=com.mysql.jdbc.Driver
+user.db.url=jdbc:mysql://192.168.2.44:3317/promoter
+user.db.username=root
+user.db.password=123456
+
+#测试环境
+rmi.scoreRmiService.ip=192.168.141.125
+rmi.scoreRmiService.port=6088
+rmi.configServerOrderRMIService.ip=192.168.141.125
+rmi.configServerOrderRMIService.port=6088
+
+
+#测试环境 获取用户信息
+getInfo.url=http://192.168.2.44:7088/UserInfo/v3/getUserInfobyUID.php
+#getInfo.url=http://119.29.166.159/getUserInfoExt.php
+
+#测试环境 日志上报
+remoteLogServer.address=192.168.4.162
+remoteLogServer.port=7979
+remoteLogServer.project_type=53
+remoteLogServer.sub-module=game_config_service
+
+#测试环境 ip白名单
+ip.white.list=192.168.119.52,192.168.119.60
+
+#测试环境 查询评论的接口
+getforum.api=http://192.168.141.125:9999/commentsandreplies
+replyforum.api=http\://192.168.141.125\:9999/reply
+#置顶api   TODO需要添加线上环境的配置
+move2top.api=http://192.168.141.125:9999/comment/up
+canclemove2top.api=http://192.168.141.125:9999/comment/unup
+deleteforum.api=http://192.168.141.125:9999/comment/delete
+deleteforumreply.api=http://192.168.141.125:9999/reply/delete
+updateforumreply.api=http\://192.168.141.125\:9999/reply/update
+#TODO 添加的线上 通过兑换码获取用户playerId rmi
+rmi.gameInviteRMIServer.ip=192.168.141.125
+rmi.gameInviteRMIServer.port=6066
+#短信回复接口
+sendshortmessage.api=http\://test.sms.uu.cc\:8081/SMS/sa/sms/send

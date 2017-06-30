@@ -96,7 +96,7 @@
 								<th>游戏角色名</th>
 								<th>游戏级数</th>
 								<th>在线时长</th>
-								<th>账号当前积分</th>
+								<th>账号累积积分</th>
 								<th>请求兑换积分</th>
 								<th>邀请码使用次数</th>
 								<th>积分详情</th>
@@ -109,7 +109,7 @@
 								<td ><span name="checkme" status="${list.status}" class="checkbox"></span></td>
 								<td>${list.orderId}</td>
 								<td>${list.orderCreatedDate }</td>
-								<td>${list.amount}</td>
+								<td>${list.payInfo}</td>
 								<td>${list.userMemo}</td>
 								<td>${list.level}</td>
 								<td>${list.onlineTime}</td>
@@ -151,8 +151,8 @@
 							             <!-- <a href="javascript:void(0);" id="notpass" item-id2="${page}" item-id3="${pageSize}" item-id="${list.orderId}" item-id1="${searchGameName}" data-reveal-id="myModal1" data-animation="fade" title="点击未通过审批">未通过</a>  -->
 							       </c:otherwise>
 							    </c:choose>
-							    
-							    <!-- 作废按钮-->
+							    <a href="javascript:return false;" title="作废的订单不能再次通过审批" class="disabled" style="background-color:#ccc">作废</a>
+							    <!-- 作废按钮
 							    <c:choose>
 								   <c:when test="${list.status == 'INVALID' }">
 							             <a href="javascript:void(0);" id="delete" item-id2="${page}" item-id3="${pageSize}" item-id4="${list.operationMemo}" item-id="${list.orderId}" item-id1="${searchGameName}" data-reveal-id="myModal" data-animation="fade" title="点击作废" style="background-color:red">作废</a>
@@ -166,6 +166,7 @@
 							             </c:if>
 							       </c:otherwise>
 							    </c:choose>
+							    -->
 							   </td>
 							</tr>
 							</c:forEach>
@@ -244,7 +245,7 @@
 			<a class="close-reveal-modal">&#215;</a>
 			<form action="<%=request.getContextPath()%>/promoter/donotpassaudit" method="post" name="form1">
 			<input type="hidden" id="orderId" name="orderId" value="1" />
-			<input type="hidden" id="searchGameName" name="searchGameName" value="1" />
+			<input type="hidden" id="searchGameName" name="searchGameName" value="${searchGameName}" />
 			<input type="hidden" id="page" name="page" value="1" />
 			<input type="hidden" id="pageSize" name="pageSize" value="8" />
 			<input type="radio" name="reason" value="对不起，您未能满足活动条件中游戏在线时长或者等级的要求" />&nbsp;&nbsp;对不起，您未能满足活动条件中游戏在线时长或者等级的要求<br>
@@ -352,12 +353,12 @@
 		//用于未通过按钮
 		$('a[data-reveal-id]').live('click', function () {
 			var id = $(this).attr("item-id");
-			var searchGameName =  $(this).attr("item-id1");
+			//var searchGameName =  $(this).attr("item-id1");
 			var page =  $(this).attr("item-id2");
 			var pageSize =  $(this).attr("item-id3");
 	        //e.preventDefault();
 	        $("#orderId").val(id);
-	        $("#searchGameName").val(searchGameName);
+	        //$("#searchGameName").val(searchGameName);
 	        $("#page").val(page);
 	        $("#pageSize").val(pageSize);
 	        var modalLocation = $(this).attr('data-reveal-id');

@@ -1,7 +1,12 @@
 package com.dsky.baas.gameinvite.model;
 
-public class InvitedCode {
+import java.io.Serializable;
+
+public class InvitedCode implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
+
 	private String tablePostfix;
 	
 	

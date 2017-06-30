@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -67,9 +68,6 @@
 				<span>当前位置：</span> <strong>配置管理           <c:if test="${not empty insertMsg}">
 				                                              <h1><font color="red">${insertMsg}</font></h1>
 			                                           </c:if>
-			                                           <c:if test="${not empty insertMsgTime}">
-				                                              <h1><font color="red">${insertMsgTime}</font></h1>
-			                                           </c:if>
 			                                           </strong>
 			</div>
 			<div class="wrap">
@@ -111,22 +109,22 @@
 											</select>
 										</p>
 										<p>
-											<label for="confirm-password">活动预热时间</label> <input type="text"
+											<label for="preheatingTime">活动预热时间</label> <input type="text"
 												id="datetimepicker_dark3" class="iText" placeholder="点击选择日期时间"
 												name="preheatingTime"
 												value="${promoterBean.preheatingTime }" /><label id="preTimeLabel"></label>
 										</p>
 										<p>
-											<label for="confirm-password">活动预热url</label> <input type="text" class="iText" name="preheatingUrl"
-												value="${promoterBean.preheatingUrl}" />
+											<label for="preheatingUrl">活动预热url</label> <input type="text" class="iText" name="preheatingUrl"
+												value="${promoterBean.preheatingUrl }" />
 										</p>														
 										<p>
-											<label for="confirm-password">活动开始时间</label> <input type="text"
+											<label for="beginTime">活动开始时间</label> <input type="text"
 												id="datetimepicker_dark1" placeholder="点击选择日期时间" class="iText"
 												name="beginTime" value="${promoterBean.beginTime }" />
 										</p>
 										<p>
-											<label for="confirm-password">活动结束时间</label> <input type="text"
+											<label for="endTime">活动结束时间</label> <input type="text"
 												id="datetimepicker_dark2" placeholder="点击选择日期时间" class="iText"
 												name="endTime" value="${promoterBean.endTime }" /><label id="endTimeLabel"></label>
 										</p>
@@ -155,7 +153,7 @@
 												<c:when test="${not empty promoterBean.endDesc}">
 													<textarea name="endDesc"
 														style="width:550px;height:160px;padding:5px;border:1px solid #c9c9c9;color:#666;"
-														>${promoterBean.endDesc}</textarea>
+														>${promoterBean.endDesc }</textarea>
 												</c:when>
 												<c:otherwise>
 													<textarea name="endDesc"
@@ -164,7 +162,6 @@
 												</c:otherwise>
 											</c:choose>
 										</p>
-														
 										<p>
 									</fieldset>
 									<br>
@@ -195,6 +192,7 @@
 										</p>
 									</fieldset>								
 								</div>
+
 								<div class="Content-Buttom"> 
 								  <p align="center">
 									<label><input type="submit" style="width:100px ;height:30px" value="保存" onclick="return checkTime();"/></label>
@@ -205,31 +203,43 @@
 							  </div>
 							  <div id="tabs2">
 								   <div class="Content-Left">
-										<fieldset
-											style="border-width: 2px; border-color: #008000; width:95%; height:220">
+											<fieldset
+												style="border-width: 2px; border-color: #008000; width:95%; height:220">
 											<legend>推广员A</legend>
 											<p>
 												<label>首次获得</label> <input id="promoterA" type="number" name="promoterA" value="${integralSchemeBean.promoterA }" style="width: 60px"min="0" > <label>个积分</label>
 												 <label><font color="red">注：</font>首次积分为玩家B获得注册积分后，玩家A获得的奖励积分</label>
 											</p>
 											<p>
+												<label>第一阶段获得</label> <input id="promoterAFirst" type="number" name="promoterAFirst" value="${integralSchemeBean.promoterAFirst }" style="width: 60px"min="0" > <label>个积分</label>
+								                <label><font color="red">注：</font>第一阶段获得为玩家B达到第一阶段等级时，A获得的奖励积分</label>
+											</p>
+											<p>
+												<label>第二阶段获得</label> <input id="promoterASecond" type="number" name="promoterASecond" value="${integralSchemeBean.promoterASecond }" style="width: 60px"min="0" > <label>个积分</label>
+								                <label><font color="red">注：</font>第二阶段获得为玩家B达到第二阶段等级时，A获得的奖励积分</label>
+											</p>
+											<p>
+												<label>第三阶段获得</label> <input id="promoterAThird" type="number" name="promoterAThird" value="${integralSchemeBean.promoterAThird }" style="width: 60px"min="0" > <label>个积分</label>
+								                <label><font color="red">注：</font>第三阶段获得为玩家B达到第三阶段等级时，A获得的奖励积分</label>
+											</p>														
+											<p>
 											    <label>推广积分上限</label> <input
-													id="scoreLimit" type="number" name="scoreLimit" value="${integralSchemeBean.promoterA*redeemCodeBean.recommandCount }"
+													id="scoreLimit" type="number" name="scoreLimit" value="${(integralSchemeBean.promoterA+integralSchemeBean.promoterAFirst+integralSchemeBean.promoterASecond+integralSchemeBean.promoterAThird)*redeemCodeBean.recommandCount }"
 													style="width: 60px" min="0" /> <label>个积分</label>
 											</p>
 											<p>
 												<label>推广员等级要求</label> <input id="promoterALevel" type="number" name="promoterALevel" value="${integralSchemeBean.promoterALevel }" style="width: 60px"min="0" > <label>级</label>
-								                <label><font color="red">注：</font>成为推广员的等级要求，没有要求输入0</label>
+								                <label><font color="red">注：</font>成为推广员的等级要求,没有要求输入0</label>
 											</p>
 											<p>
 												<label>推广员时间要求</label> <input id="promoterATime" type="number" name="promoterATime" value="${integralSchemeBean.promoterATime }" style="width: 60px"min="0" > <label>秒</label>
-								                <label><font color="red">注：</font>成为推广员的时间要求，没有要求输入0</label>
+								                <label><font color="red">注：</font>成为推广员的在线时长要求,没有要求输入0</label>
 											</p>
 											<p>
-												<label>充值奖励</label> <input type="number" name="rechargeA" value="${integralSchemeBean.rechargeA }" style="width: 60px"min="0" > <label>个积分</label>
+												<label>充值奖励</label> <input type="number" name="rechargeA" value="${integralSchemeBean.rechargeA}" style="width: 60px"min="0" > <label>个积分</label>
 								                <label><font color="red">注：</font>B充值后A获得的积分，没有奖励输入0</label>
 											</p>							
-										</fieldset>	
+										</fieldset>
 										<br>
 										<fieldset style="border-width: 2px; border-color: #008000; width:95%; height:220">
 											<legend>推广员B</legend>
@@ -244,41 +254,64 @@
 											</p>
 											<p>
 												<label>第三阶段成长获得</label> <input type="number" name="promoterBThird" value="${integralSchemeBean.promoterBThird }" style="width: 60px"  min="0" > <label>个积分 &nbsp;&nbsp;&nbsp; <font color="red">注：</font>第三阶段奖励积分为玩家B达到第三阶段等级后，玩家B获得的奖励积分</label>
-											</p>
-											<p>
+											</p>														
 											<label>是否发放新手礼包</label>
-											       <input type="radio" checked="checked" name="redeemCode" value="1" class="inputStyle"/>是&nbsp;&nbsp;&nbsp;&nbsp;
-											       <input type="radio" name="redeemCode" value="0" class="inputStyle" />否
+											       <input type="radio" <c:if test="${integralSchemeBean.redeemCode==1 }">checked="checked"</c:if> name="redeemCode" value="1" class="inputStyle"/>是&nbsp;&nbsp;&nbsp;&nbsp;
+											       <input type="radio" <c:if test="${integralSchemeBean.redeemCode==0 }">checked="checked"</c:if> name="redeemCode" value="0" class="inputStyle"/>否
 											</p>
 											<p>
 												<label>充值奖励</label> <input type="number" name="rechargeB" value="${integralSchemeBean.rechargeB}" style="width: 60px"min="0" > <label>个积分</label>
 								                <label><font color="red">注：</font>B充值后B获得的积分，没有奖励输入0</label>
 											</p>							
+										</fieldset>							
 									</fieldset>							   
 								   </div>
 								   <div class="Content-Main">
-									   <fieldset style="border-width: 2px; border-color: #008000; width:95%; height:220">
-										  <legend>奖励条件</legend>
-										  <p>
-											<label>推广员B级数要求(第一阶段)</label> <input type="number" name="level" value="${integralSchemeBean.level }" style="width: 60px" min="0" /> <label>级</label>
-										    <label>游戏角色在线时间要求</label> <input type="number" name="time" value="${integralSchemeBean.time }" style="width: 60px" min="0" /> <label>秒</label>
-										  </p>
-										  <p>
-											<label>推广员B级数要求(第二阶段)</label> <input type="number" name="levelSecond" value="${integralSchemeBean.levelSecond }" style="width: 60px" min="0" /> <label>级</label>
-											<label>充值奖励金额下限</label> <input type="number" name="recharge" value="${integralSchemeBean.recharge }" style="width: 60px" min="0" /> <label>元</label>
-										  </p>
-										  <p>
-											<label>推广员B级数要求(第三阶段)</label> <input type="number" name="levelThird" value="${integralSchemeBean.levelThird }" style="width: 60px" min="0" /> <label>级</label>
-										  </p>
-										  <label>是否开启现金兑换</label>
-									       <input type="radio" checked="checked" name="exchCash" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;
-									       <input type="radio" name="exchCash" value="0" class="inputStyle" />关闭
-							              </p>
-										  <p>
-										  <label>可分享方式</label> 
-											   微信&朋友圈<input type="checkbox"  name="shareMethod"  value="1" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
-											 QQ<input type="checkbox"  name="shareMethod"  value="4" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
-											  微博<input type="checkbox"  name="shareMethod"  value="8" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+										<fieldset style="border-width: 2px; border-color: #008000; width:95%; height:220">
+											<legend>奖励条件</legend>
+											<p>
+												<label>推广员B级数要求(第一阶段)</label> <input type="number" name="level" value="${integralSchemeBean.level }" style="width: 60px" min="0" /> <label>级</label>
+											    <label>游戏角色在线时间要求</label> <input type="number" name="time" value="${integralSchemeBean.time }" style="width: 60px" min="0" /> <label>秒</label>
+											</p>
+											<p>
+												<label>推广员B级数要求(第二阶段)</label> <input type="number" name="levelSecond" value="${integralSchemeBean.levelSecond }" style="width: 60px" min="0" /> <label>级</label>
+												<label>充值奖励金额下限</label> <input type="number" name="recharge" value="${integralSchemeBean.recharge }" style="width: 60px" min="0" /> <label>元</label>
+											</p>
+											<p>
+												<label>推广员B级数要求(第三阶段)</label> <input type="number" name="levelThird" value="${integralSchemeBean.levelThird }" style="width: 60px" min="0" /> <label>级</label>
+											</p>
+											<p>														
+										  		<label>是否开启现金兑换</label>
+									       		<input type="radio" checked="checked" name="exchCash" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;
+									       		<input type="radio" name="exchCash" value="0" class="inputStyle" />关闭
+							              	</p>
+										  	<p>
+												<label>可分享方式</label>
+												<c:choose>
+												   <c:when test="${not empty redeemCodeBean.shareMethod and fn:contains(redeemCodeBean.shareMethod,'1')}">
+												              微信&朋友圈<input type="checkbox" name="shareMethod" checked="checked"  value="1" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:when>
+												   <c:otherwise>
+												             微信&朋友圈<input type="checkbox" name="shareMethod" value="1" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:otherwise>
+												</c:choose>
+												<c:choose>
+												   <c:when test="${not empty redeemCodeBean.shareMethod and fn:contains(redeemCodeBean.shareMethod,'4')}">
+												     QQ<input type="checkbox" name="shareMethod" checked="checked"  value="4" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:when>
+												   <c:otherwise>
+												     QQ<input type="checkbox" name="shareMethod"   value="4" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:otherwise>
+												</c:choose>
+												
+												<c:choose>
+												   <c:when test="${not empty redeemCodeBean.shareMethod and fn:contains(redeemCodeBean.shareMethod,'8')}">
+												              微博<input type="checkbox" name="shareMethod" checked="checked"  value="8" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:when>
+												   <c:otherwise>
+												             微博<input type="checkbox" name="shareMethod"   value="8" class="inputStyle"/>&nbsp;&nbsp;&nbsp;&nbsp;
+												   </c:otherwise>
+												</c:choose>
 										  </p>
 										  <p>
 												<label>点击微信分享奖励</label> <input type="number" name="weixinClickShare" value="${integralSchemeBean.weixinClickShare }" style="width: 60px" min="0" /> <label>分</label>
@@ -291,7 +324,7 @@
 										  <p>
 												<label>点击微博分享奖励</label> <input type="number" name="weiboClickShare" value="${integralSchemeBean.weiboClickShare }" style="width: 60px" min="0" /> <label>分</label>
 											    <label>微博分享成功奖励</label> <input type="number" name="weiboClickShareSuccess" value="${integralSchemeBean.weiboClickShareSuccess }" style="width: 60px" min="0" /> <label>分</label>
-										  </p>										  		  							              
+										  </p>											  										  										  										  							              
 									</fieldset>								   
 								   </div>
 								<div class="Content-Buttom"> 
@@ -303,13 +336,16 @@
 							  </div>
 							  <div id="tabs3">
 									<p>
-										<label for="datetimepicker_dark4">兑换开始时间</label> 
-										<input type="text" id="datetimepicker_dark4" placeholder="点击选择日期时间" class="iText" name="exchBeginTime" value="${exchBean.exchBeginTime }" />
+										<label for="datetimepicker_dark4">兑换开始时间</label> <input type="text"
+											id="datetimepicker_dark4" placeholder="点击选择日期时间" class="iText"
+											name="exchBeginTime" value="${exchBean.exchBeginTime }" />
 									</p>
 									<p>
-										<label for="datetimepicker_dark5">兑换结束时间</label> 
-										<input type="text" id="datetimepicker_dark5" placeholder="点击选择日期时间" class="iText" name="exchEndTime" value="${exchBean.exchEndTime }" />
+										<label for="datetimepicker_dark5">兑换结束时间</label> <input type="text"
+											id="datetimepicker_dark5" placeholder="点击选择日期时间" class="iText"
+											name="exchEndTime" value="${exchBean.exchEndTime }" />
 									</p>
+			
 									<br>
 									<fieldset
 										style="border-width: 2px; border-color: #008000; width:50%; height:220">
@@ -336,7 +372,7 @@
 										</p>
 										<p>
 											<label>现金兑换上限</label> <input type="number" name="exchLimit"
-												value="${exchBean.exchLimit}" style="width: 60px" min="0">
+												value="${exchBean.exchLimit }" style="width: 60px" min="0">
 											<label>积分</label>
 										</p>
 			
@@ -349,15 +385,15 @@
 										</p>
 									</fieldset>
 									<p>
-										<label><input type="submit" style="width:100px ;height:30px;margin-right:50px;" value="保存" /></label> 
+										<label><input type="submit"
+											style="width:100px ;height:30px" value="保存" /></label> 
 									</p>		  
 
 				               <div style="clear:both"></div>
 							  </div>
 						</div>
 						</div>						
-
-					<!-- 表单结束标记 -->
+						<!-- 表单结束标记 -->
 					</form>
 				</div>
 			</div>
@@ -393,13 +429,13 @@
 			var promoterASecond = parseInt($("#promoterASecond").val());
 			var promoterAFirst = parseInt($("#promoterAFirst").val());
 			var promoterAThird = parseInt($("#promoterAThird").val());
-			/*
+
             console.log("promoterA="+promoterA);
             console.log("promoterAFirst="+promoterAFirst);
             console.log("promoterASecond="+promoterASecond);
             console.log("promoterAThird="+promoterAThird);
             console.log("scoreLimit="+scoreLimit);
-            console.log("值发生了变化");*/
+            console.log("值发生了变化");
 			$("#times").val(Math.floor(scoreLimit/(promoterA+promoterASecond+promoterAFirst+promoterAThird)));
 
 		});
@@ -410,13 +446,13 @@
 				var promoterASecond = parseInt($("#promoterASecond").val());
 				var promoterAFirst = parseInt($("#promoterAFirst").val());
 				var promoterAThird = parseInt($("#promoterAThird").val());
-				/*
+
 	            console.log("promoterA="+promoterA);
 	            console.log("promoterAFirst="+promoterAFirst);
 	            console.log("promoterASecond="+promoterASecond);
 	            console.log("promoterAThird="+promoterAThird);
 	            console.log("scoreLimit="+scoreLimit);
-	            console.log("值发生了变化");*/
+	            console.log("值发生了变化");
 				$("#times").val(Math.floor(scoreLimit/(promoterA+promoterASecond+promoterAFirst+promoterAThird)));
 			});
 		$('#promoterAFirst').bind('input propertychange', function() {
@@ -425,13 +461,13 @@
 			var promoterASecond = parseInt($("#promoterASecond").val());
 			var promoterAFirst = parseInt($("#promoterAFirst").val());
 			var promoterAThird = parseInt($("#promoterAThird").val());
-			/*
+
             console.log("promoterA="+promoterA);
             console.log("promoterAFirst="+promoterAFirst);
             console.log("promoterASecond="+promoterASecond);
             console.log("promoterAThird="+promoterAThird);
             console.log("scoreLimit="+scoreLimit);
-            console.log("值发生了变化");*/
+            console.log("值发生了变化");
 			$("#times").val(Math.floor(scoreLimit/(promoterA+promoterASecond+promoterAFirst+promoterAThird)));
 		});		
 		$('#promoterASecond').bind('input propertychange', function() {
@@ -440,13 +476,13 @@
 			var promoterASecond = parseInt($("#promoterASecond").val());
 			var promoterAFirst = parseInt($("#promoterAFirst").val());
 			var promoterAThird = parseInt($("#promoterAThird").val());
-			/*
+
             console.log("promoterA="+promoterA);
             console.log("promoterAFirst="+promoterAFirst);
             console.log("promoterASecond="+promoterASecond);
             console.log("promoterAThird="+promoterAThird);
             console.log("scoreLimit="+scoreLimit);
-            console.log("值发生了变化");*/
+            console.log("值发生了变化");
 			$("#times").val(Math.floor(scoreLimit/(promoterA+promoterASecond+promoterAFirst+promoterAThird)));
 		});
 		$('#promoterAThird').bind('input propertychange', function() {
@@ -455,13 +491,13 @@
 			var promoterASecond = parseInt($("#promoterASecond").val());
 			var promoterAFirst = parseInt($("#promoterAFirst").val());
 			var promoterAThird = parseInt($("#promoterAThird").val());
-			/*
+
             console.log("promoterA="+promoterA);
             console.log("promoterAFirst="+promoterAFirst);
             console.log("promoterASecond="+promoterASecond);
             console.log("promoterAThird="+promoterAThird);
             console.log("scoreLimit="+scoreLimit);
-            console.log("值发生了变化");*/
+            console.log("值发生了变化");
 			$("#times").val(Math.floor(scoreLimit/(promoterA+promoterASecond+promoterAFirst+promoterAThird)));
 		});
 		//这个是自定义添加的验证方法

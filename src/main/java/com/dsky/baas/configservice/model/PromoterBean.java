@@ -8,6 +8,8 @@ import java.io.Serializable;
  * @author Chris.li
  */
 public class PromoterBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	//活动在数据库中的id
 	private String id;
 	//游戏id

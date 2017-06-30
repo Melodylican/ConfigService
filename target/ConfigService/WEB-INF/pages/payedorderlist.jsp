@@ -100,7 +100,7 @@
 									<th>申请兑换积分</th>
 									<th>积分兑换方案</th>
 									<th>兑换金额</th>
-									<th>账号当前积分</th>
+									<th>账号累积积分</th>
 									<th>操作</th>																		
 								</tr>
 							</thead>
@@ -115,7 +115,7 @@
 									<td><fmt:formatNumber type="number" value="${(list.requestExchangePoints/list.amount)}" maxFractionDigits="0"/> 积分兑换 1 元</td>
 									<td>${list.amount}</td>
 									<td><label>${list.hasPoints}</label>&nbsp;&nbsp;&nbsp; <a id="detail" data-reveal="detail" href="javascript:void(0);" title="点击查看积分详情" item-id1="${list.playerId}" item-id2="${list.gameId}">积分详情</a></td>
-									<td><a href="javascript:void(0);" item-cellphone="${list.payInfo}" item-gameid="${list.gameId }" data-reveal-id="myModal" data-animation="fade" class="btn">短息通知</a></td>
+									<td><a href="javascript:void(0);" item-cellphone="${list.payInfo}" item-gameid="${list.gameId}" data-reveal-id="myModal" data-animation="fade" class="btn">短息通知</a></td>
 								</tr>
 								</c:forEach>
 								<c:if test="${not empty list }">

@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dsky.baas.configservice.model.BlackListBean;
 import com.dsky.baas.configservice.model.ExchangeBean;
 import com.dsky.baas.configservice.model.PromoterBean;
@@ -105,10 +106,10 @@ public class RedisMethonds {
 				//如果redis中已经存在该键值 则进行更新
 		           redisTemplate.delete(key);
 		           logger.info("key已经存在 删除 : "+key+"然后进行更新");
-		           redisTemplate.opsForValue().set(key, value);
+		           redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
 		     }else {
 		    	 //如果redis中没有这个键值 则直接存储
-		    	 redisTemplate.opsForValue().set(key, value);
+		    	 redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
 		    	 logger.info("Redis 中没有对应的 Key : "+key);
 		     }
 			return 1;
@@ -124,14 +125,14 @@ public class RedisMethonds {
 				//如果redis中已经存在该键值 则进行更新
 		           redisTemplate.delete(key);
 		           logger.info("key已经存在 删除 : "+key+"然后进行更新");
-		           redisTemplate.opsForValue().set(key, value);
+		           redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
 		     }else {
 		    	 //如果redis中没有这个键值 则直接存储
-		    	 redisTemplate.opsForValue().set(key, value);
+		    	 redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
 		    	 logger.info("Redis 中没有对应的 Key : "+key);
 		     }
 			return 1;
-		}catch (JedisConnectionException e) {
+		}catch (Exception e) {
 			logger.error("redis连接出现异常 "+e.getMessage(), e);
 			return 0;
 		}
@@ -158,7 +159,9 @@ public class RedisMethonds {
 		}
 	}
 	
-	public static String get(String key) {
+
+	
+	public static String getBlackList(String key) {
 		try{
 			if(redisTemplate.hasKey(key)) {
 				//如果redis中已经存在该键值 则进行更新
@@ -168,9 +171,9 @@ public class RedisMethonds {
 		           return value;
 		     }else {
 		    	 //如果redis中没有这个键值 则直接返回空
-		    	 redisTemplate.opsForValue().set(key, "1");//如果当前redis中没有该key的记录，则加入默认为紧急测试关闭的key
+		    	 
 		    	 logger.info("Redis get(String key) 中没有对应的 Key : "+key);
-		    	 return "1";
+		    	 return null;
 		     }
 		}catch (JedisConnectionException e) {
 			logger.error("redis连接出现异常 "+e.getMessage(), e);
@@ -183,17 +186,24 @@ public class RedisMethonds {
 			if(redisTemplate.hasKey(key)) {
 				//如果redis中已经存在该键值 则进行更新
 				   logger.info("开始获取key : "+key);
-		           PromoterBean value = (PromoterBean) redisTemplate.opsForValue().get(key);
-		           logger.info("redis返回 key="+key+" 的值为 value="+value.toString());
-		           return value;
+		           String value =  (String) redisTemplate.opsForValue().get(key);
+		           if(value != null) {
+			           PromoterBean pb = JSONObject.parseObject(value, PromoterBean.class);
+			           if(pb != null)
+			        	   logger.info("redis返回 key="+key+" 的值为 pb="+pb.toString());
+			           else 
+			        	   logger.info("未查询到： "+key+" 的值");
+			           return pb;
+		           } else
+		        	   return null;
 		     }else {
 		    	 //如果redis中没有这个键值 则直接返回空
 		    	 //redisTemplate.opsForValue().set(key, "1");//如果当前redis中没有该key的记录，则加入默认为紧急测试关闭的key
 		    	 logger.info("Redis get(String key) 中没有对应的 Key : "+key);
 		    	 return null;
 		     }
-		}catch (JedisConnectionException e) {
-			logger.error("redis连接出现异常 "+e.getMessage(), e);
+		}catch (Exception e) {
+			logger.error("redis出现异常 "+e.getMessage(), e);
 			return null;
 		}
 	}
@@ -203,9 +213,17 @@ public class RedisMethonds {
 			if(redisTemplate.hasKey(key)) {
 				//如果redis中已经存在该键值 则进行更新
 				   logger.info("开始获取key : "+key);
-		           ExchangeBean value = (ExchangeBean) redisTemplate.opsForValue().get(key);
-		           logger.info("redis返回 key="+key+" 的值为 value="+value.toString());
-		           return value;
+		           String value = (String) redisTemplate.opsForValue().get(key);
+		           if(value != null) {
+		        	   ExchangeBean eb = JSONObject.parseObject(value, ExchangeBean.class);
+		        	   if(eb != null)
+		        		   logger.info("redis返回 key="+key+" 的值为 pb="+eb.toString());
+		        	   else
+		        		   logger.info("未查询到： "+key+" 的值");  
+		        	   return eb;
+		           } else
+		        	   return null;
+
 		     }else {
 		    	 //如果redis中没有这个键值 则直接返回空
 		    	 //redisTemplate.opsForValue().set(key, "1");//如果当前redis中没有该key的记录，则加入默认为紧急测试关闭的key

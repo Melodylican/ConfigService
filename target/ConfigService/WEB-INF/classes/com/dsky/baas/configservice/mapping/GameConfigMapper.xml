@@ -296,16 +296,16 @@
 				weixinClickShareSuccess = #{weixinClickShareSuccess,jdbcType=INTEGER},
 			</if>
 			<if test="qqClickShare != null">
-				weixinClickShare = #{weixinClickShare,jdbcType=INTEGER},
+				qqClickShare = #{qqClickShare,jdbcType=INTEGER},
 			</if>
 			<if test="qqClickShareSuccess != null">
-				weixinClickShareSuccess = #{weixinClickShareSuccess,jdbcType=INTEGER},
+				qqClickShareSuccess = #{qqClickShareSuccess,jdbcType=INTEGER},
 			</if>
 			<if test="weiboClickShare != null">
-				weixinClickShare = #{weixinClickShare,jdbcType=INTEGER},
+				weiboClickShare = #{weiboClickShare,jdbcType=INTEGER},
 			</if>
 			<if test="weiboClickShareSuccess != null">
-				weixinClickShareSuccess = #{weixinClickShareSuccess,jdbcType=INTEGER},
+				weiboClickShareSuccess = #{weiboClickShareSuccess,jdbcType=INTEGER},
 			</if>															
 		</set>
 		where id = #{id,jdbcType=INTEGER}

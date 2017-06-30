@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dsky.baas.configservice.dao.RedisMethonds;
 //import com.dsky.baas.configservice.dao.RedisMethonds;
@@ -47,7 +48,6 @@ public class ConfigSearchController {
 	}
 
 	/**
-	 * 
 	 * 方法功能说明：暂未使用
 	 * 创建：2016年11月17日 by chris.li 
 	 * 修改：日期 by 修改者
@@ -65,19 +65,19 @@ public class ConfigSearchController {
 		if (req.getParameter("parameter") != null)
 			jsonObject = JSONObject.parseObject(req.getParameter("parameter"));
 		else
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "parameter json格式参数必须传递"));
 
 		String gameId = "";
 		String location = "";
 
 		if (!jsonObject.containsKey("gameId")) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "gameId字段必须传递 "));
 		} else {
 			gameId = jsonObject.get("gameId").toString();// 获取游戏ID
 			if (gameId.equals(""))
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "gameId字段不能为空 "));
 		}
 		if (!jsonObject.containsKey("location")) {
@@ -91,11 +91,11 @@ public class ConfigSearchController {
 				.selectPromoterByGameIdAndLocation(gameId, location);
 		
 		if (promoterBean == null)
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "没有当前时段的对应活动"));
 		GameConfig gameConfig = ApiResultPacker
 				.parsePromoterBean2GameConfig(promoterBean);
-		return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+		return JSON.toJSONString(ApiResultPacker
 				.packToApiResultObject(gameConfig));
 	}
 
@@ -120,12 +120,12 @@ public class ConfigSearchController {
 		String id = "";
 
 		if (!jsonObject.containsKey("id")) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "id字段必须传递 "));
 		} else {
 			id = jsonObject.get("id").toString();// 获取游戏ID
 			if ("".equals(id))
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "id字段不能为空 "));
 		}
 
@@ -140,8 +140,8 @@ public class ConfigSearchController {
 				.packToApiResultObject(gameConfig));
 	}
 
-	/**
-	 * 用于cp查询是否具有分享权限
+	/** 
+	 * 用于cp查询是否具有分享权限   该方法暂停使用
 	 * @param req
 	 * @return
 	 */
@@ -160,12 +160,12 @@ public class ConfigSearchController {
 		String time = "";
 
 		if (!jsonObject.containsKey("gameId")) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "gameId字段必须传递 "));
 		} else {
 			gameId = jsonObject.get("gameId").toString();// 获取游戏ID
 			if (gameId.equals(""))
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "gameId字段不能为空 "));
 		}
 		if (!jsonObject.containsKey("location")) {
@@ -175,7 +175,7 @@ public class ConfigSearchController {
 			location = jsonObject.get("location").toString();// 获取地区
 		}
 		if (!jsonObject.containsKey("level") && !jsonObject.containsKey("time")) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "游戏等级level和游戏在线时间time不能都为空 "));
 		}
 		if (jsonObject.containsKey("level")) {
@@ -188,7 +188,7 @@ public class ConfigSearchController {
 		PromoterBean promoterBean = gameConfigService
 				.selectPromoterByGameIdAndLocation(gameId, location);
 		if (promoterBean == null)
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "没有当前时段的对应活动"));
 		GameConfig gameConfig = ApiResultPacker
 				.parsePromoterBean2GameConfig(promoterBean);
@@ -209,11 +209,11 @@ public class ConfigSearchController {
 
 		if (flag_level == 1 && flag_time == 1)
 			// 等级和时间都满足要求
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(0, "true"));
 		else {
 			// 等级和时间中有一项不满足
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(0, "false"));
 		}
 
@@ -231,7 +231,7 @@ public class ConfigSearchController {
 		logger.info("ConfigSearchController  -->   【/act】");
 		Map<String, String> cookieMap = CommonUtil.parseHeaderCookie(req);
 		if (cookieMap == null) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "鉴权失败"));
 		}
 		logger.info("==/act==" + cookieMap.size());
@@ -242,13 +242,13 @@ public class ConfigSearchController {
 		logger.info("获取到的客户端ip="+_cip);
 		if (!cookieMap.containsKey("gid")) {
 			logger.info("ConfigSearchController /act接口  鉴权中没有gid字段" + gameId);
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "鉴权中gid字段必须传递 "));
 		} else {
 			gameId = cookieMap.get("gid").toString();// 获取游戏ID
 			logger.info("ConfigSearchController /act接口  gid ====" + gameId);
 			if ("".equals(gameId))
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "鉴权中gid字段不能为空 "));
 		}
 		if (!cookieMap.containsKey("location")) {
@@ -261,11 +261,10 @@ public class ConfigSearchController {
 		//此处待改成从redis中获取
 		promoterBean = RedisMethonds.getPromoterBean("act_promoter_"+gameId);
 		if(promoterBean == null) {
-			promoterBean = gameConfigService
-					.selectPromoterByGameIdAndLocation(gameId, location);
+			promoterBean = gameConfigService.selectPromoterByGameIdAndLocation(gameId, location);
 			if (promoterBean == null) {
 				logger.info("ConfigSearchController /act接口 没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内");
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
 			} else {
 				RedisMethonds.set("act_promoter_"+gameId, promoterBean);
@@ -274,11 +273,10 @@ public class ConfigSearchController {
 		}
 		//用于查询黑名单的键值
 		String searchBlaskListKey = "blackList:"+promoterBean.getId()+":"+promoterBean.getGameId()+":"+uid;
-		String isInBlaskList = RedisMethonds.get(searchBlaskListKey);
+		String isInBlaskList = RedisMethonds.getBlackList(searchBlaskListKey);
 		logger.info("查询黑名单的键值： "+searchBlaskListKey +"   查询结果： "+isInBlaskList);
 		if(isInBlaskList != null && isInBlaskList.length() > 0)
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
-					.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
+			return JSON.toJSONString(ApiResultPacker.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
 		
 		logger.info("ConfigSearchController /act接口  gameId="+gameId+"  "+promoterBean.toString());
 
@@ -309,20 +307,18 @@ public class ConfigSearchController {
 			exch = gameConfigService.selectExchBean(promoterBean.getGameName());
 			if (exch == null) {
 				logger.info("ConfigSearchController /act接口 没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内");
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
-						.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));
+				return JSON.toJSONString(ApiResultPacker.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));
 			} else {
 				RedisMethonds.set("act_exchange_"+gameId, exch);
 				logger.info("redis中没有对应于【"+gameId+"】的兑换配置信息，现将其放入redis中key【act_exchage_"+gameId+"】");
 			}
 		}
 		logger.info("ConfigSearchController /act接口  "+exch.toString());
-		HaveGameConfig havaGameConfig = ApiResultPacker
-				.parsePromoterBean2HaveGameConfig(promoterBean,exch);
+		HaveGameConfig havaGameConfig = ApiResultPacker.parsePromoterBean2HaveGameConfig(promoterBean,exch);
 		havaGameConfig.setCode(0);
 		havaGameConfig.setMsg("success");
 		logger.info("ConfigSearchController /act接口  客户端访问返回结果为："+havaGameConfig.toString());
-		return com.alibaba.fastjson.JSON.toJSONString(havaGameConfig);
+		return JSON.toJSONString(havaGameConfig);
 	}
 
 	/**
@@ -339,20 +335,20 @@ public class ConfigSearchController {
 
 
 		if (cookieMap == null) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "鉴权失败"));
 		}
 		logger.info("==/exch==" + cookieMap.size());
 		String gameId = "";
 
 		if (!cookieMap.containsKey("gid")) {
-			return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+			return JSON.toJSONString(ApiResultPacker
 					.packToApiResultObject(100, "鉴权中gid字段必须传递 "));
 		} else {
 			gameId = cookieMap.get("gid").toString();// 获取游戏ID
 			logger.info("gid =" + gameId);
 			if ("".equals(gameId))
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "鉴权中gid字段不能为空 "));
 		}
 		String uid = cookieMap.get("uid");//获取用户的uid
@@ -366,29 +362,26 @@ public class ConfigSearchController {
 				gameName = gameConfigService.selectGameNameByGameId(gameId);
 			logger.info("客户端查询的游戏名称是：" + gameName);
 			if(gameName == null) {
-				return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
+				return JSON.toJSONString(ApiResultPacker
 						.packToApiResultObject(100, "ConfigSearchController /exch接口  没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));				
 			} else {
 				//用于查询黑名单的键值
 				String searchBlaskListKey = "blackList:"+pb.getId()+":"+pb.getGameId()+":"+uid;
-				String isInBlaskList = RedisMethonds.get(searchBlaskListKey);
+				String isInBlaskList = RedisMethonds.getBlackList(searchBlaskListKey);
 				logger.info("查询黑名单的键值： "+searchBlaskListKey +"   查询结果： "+isInBlaskList);
 				if(isInBlaskList != null && isInBlaskList.length() > 0)
-					return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
-							.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
+					return JSON.toJSONString(ApiResultPacker.packToApiResultObject(100, "没有对应于：gameId="+gameId+" 的推广活动，或者当前不在活动日期内"));
 				
 				exchBean = gameConfigService.selectExchBean(gameName);
 				if (exchBean == null) {
-					return com.alibaba.fastjson.JSON.toJSONString(ApiResultPacker
-							.packToApiResultObject(100, "ConfigSearchController /exch接口  没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));
+					return JSON.toJSONString(ApiResultPacker.packToApiResultObject(100, "ConfigSearchController /exch接口  没有对应于：gameId="+gameId+" 的兑换活动，或者当前不在兑换日期内"));
 				} else {
 					RedisMethonds.set("act_exchange_"+gameId, exchBean);
 				}
 			}
 		}
 		
-		HaveExchConfig havaExchConfig = ApiResultPacker
-				.parsePromoterBean2HaveExchConfig(exchBean);
+		HaveExchConfig havaExchConfig = ApiResultPacker.parsePromoterBean2HaveExchConfig(exchBean);
 		havaExchConfig.setCode(0);
 		havaExchConfig.setMsg("success");
 		logger.info("ConfigSearchController /exch接口  客户端访问返回结果为："+havaExchConfig.toString());

@@ -315,11 +315,12 @@ public class OrderController {
 		PromoterBean pb = gameConfigService.selectPromoterByGameIdAndLocation(gameId+"", "中国大陆");
 		int actId = Integer.MAX_VALUE;;
 		try {
-			actId = Integer.parseInt(pb.getId());
+			if(pb != null)
+				actId = Integer.parseInt(pb.getId());
+			logger.info("查询的活动Id是： "+actId);
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			//如果活动actId 不存在 则默认设置为最大值
-			
 		}
 		List<ExchangeOrder> listOrg = null;
 		try { 
@@ -350,8 +351,7 @@ public class OrderController {
 					+ e.getMessage());
 			return "order";
 		}
-		logger.info("查询时的startRow=" + ((page - 1) * pageSize) + " endRow="
-				+ pageSize);
+		logger.info("查询时的startRow=" + ((page - 1) * pageSize) + " endRow="+ pageSize);
 
 		List<OrderBean> list = new ArrayList<OrderBean>();
 		for (ExchangeOrder eo : listOrg) {
@@ -359,8 +359,7 @@ public class OrderController {
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
 			ob.setPlayerId(eo.getPlayerId());
-			ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo
-					.getCreateAt() + "") * 1000));
+			ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo.getCreateAt() + "") * 1000));
 			ob.setGameName(searchGameName);
 			ob.setLevel(eo.getLevel());
 			ob.setHasPoints(eo.getHasPoints());
@@ -372,25 +371,32 @@ public class OrderController {
 			ob.setPayInfo(eo.getPayInfo());
 			ob.setStatus(eo.getStatus());
 			ob.setUserMemo(eo.getUserMemo());
+			logger.info("测试。。。。。。。。。开始");
 			if(pb != null) {
+				logger.info("test point 1");
 				try {
 					InvitedCode ic = gameInviteServiceImpl.getInvitedCodeByPlayerIdAndGameIdAndActId(eo.getPlayerId(), gameId, actId);
 					logger.info("查询  [getInvitedCodeByPlayerIdAndGameIdAndActId] 参数："+eo.getPlayerId()+"  "+gameId+"  "+actId );
-					
+					logger.info("test point 2");
 					if(ic != null) {
+						logger.info("test point 3");
 						ob.setInvitedPeople(ic.getApplyCount()+"");
 						logger.info("查询的次数为： "+ic.getApplyCount());
 						logger.info("查询的结果为： "+ic.toString());
 					} else {
+						logger.info("test point 4");
 						ob.setInvitedPeople("未查询到使用次数");
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			} else {
+				logger.info("查询到的PromoterBean 为空");
 				ob.setInvitedPeople("未查询到使用次数");
 			}
+			logger.info("测试。。。。。。。。。结束");
+			
 			list.add(ob);
 		}
 		if (request.getParameter("gameName") != null) {
@@ -434,6 +440,7 @@ public class OrderController {
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("searchGameName", searchGameName);
+		logger.info("test point 6");
 		return "order";
 	}
 
@@ -459,6 +466,7 @@ public class OrderController {
 		String orderId = request.getParameter("orderId");
 		String reason = request.getParameter("reason");
 		String otherReason = request.getParameter("otherReason");
+		String searchGameName = request.getParameter("searchGameName");
 		if(otherReason != null && !"".equals(otherReason.trim())) {
 			reason = otherReason;
 			logger.info("输入的其他未通过审核的原因是： "+otherReason);
@@ -485,7 +493,7 @@ public class OrderController {
 			warningReporterService.reportWarnString("/promoter/donotpassaudit RMI调用远程接口【updateExchangeOrderStatus】出现异常  远程RMI未启动\n"
 					+ e.getMessage());			
 		}finally {
-			return "forward:/promoter/orderajax?searchGameName="
+			return "redirect:/promoter/orderajax?searchGameName="
 			+ java.net.URLEncoder.encode(gameName, "utf-8") + "&page="
 			+ page + "&pageSize=" + pageSize;
 		}
@@ -534,7 +542,7 @@ public class OrderController {
 			warningReporterService.reportWarnString("/promoter/throughaudit RMI调用远程接口【updateExchangeOrderStatus】出现异常 远程RMI未启动\n"
 					+ e.getMessage());
 		} finally{
-			return "forward:/promoter/orderajax?searchGameName="
+			return "redirect:/promoter/orderajax?searchGameName="
 					+ java.net.URLEncoder.encode(gameName, "utf-8") + "&page="
 					+ page + "&pageSize=" + pageSize;
 		}
@@ -600,7 +608,7 @@ public class OrderController {
 			warningReporterService.reportWarnString("/promoter/pass RMI调用远程接口【updateExchangeOrderStatus】出现异常 远程RMI未启动\n"
 					+ e.getMessage());
 		} finally{
-			return "forward:/promoter/orderajax?searchGameName="
+			return "redirect:/promoter/orderajax?searchGameName="
 					+ java.net.URLEncoder.encode(searchGameName, "utf-8") + "&page="
 					+ page + "&pageSize=" + pageSize;
 		}
@@ -619,7 +627,6 @@ public class OrderController {
 			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
 	public String invalid(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
 		logger.info("OrderController  -->   【/promoter/invalid】");
-		logger.info("OrderController  -->   【/promoter/donotpassaudit】");
 		if (request.getParameter("orderId") != null) {
 			logger.info("============donotpassaudit=============="+ request.getParameter("orderId").toString());
 		}
@@ -652,7 +659,7 @@ public class OrderController {
 			warningReporterService.reportWarnString("/promoter/donotpassaudit RMI调用远程接口【updateExchangeOrderStatus】出现异常  远程RMI未启动\n"
 					+ e.getMessage());			
 		}finally {
-			return "forward:/promoter/orderajax?searchGameName="
+			return "redirect:/promoter/orderajax?searchGameName="
 			+ java.net.URLEncoder.encode(gameName, "utf-8") + "&page="
 			+ page + "&pageSize=" + pageSize;
 		}
@@ -1099,8 +1106,7 @@ public class OrderController {
 		model.addAttribute("page", page);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("type", type);
-		
-		model.addAttribute("currentGameName", gameNameArr[0]);
+		model.addAttribute("searchGameName", gameNameArr[0]);
 		return "payedorderlist";
 	}
 	/**
@@ -1297,13 +1303,17 @@ public class OrderController {
 			gameNameArr = gameNames.split(",");
 		}
 		String searchGameName = request.getParameter("searchGameName");
+		logger.info("收到的查询游戏名称是： "+searchGameName);
 		List<String> gameNameList = Arrays.asList(gameNameArr);
 		model.addAttribute("gameNameList", gameNameList);
+		String gameIdStr = gameConfigService.getGameIdByGameName(searchGameName);
+		int gameId = 0;
 		// 根据游戏名称查询游戏对应的id
-		int gameId = Integer.parseInt(gameConfigService.getGameIdByGameName(searchGameName));
+		if(gameIdStr != null && NumberUtils.isNumber(gameIdStr))
+			gameId = Integer.parseInt(gameIdStr);
 		logger.info("==gameId=" + gameId);
 		PromoterBean pb = gameConfigService.selectPromoterByGameIdAndLocation(gameId+"", "中国大陆");
-		int actId = Integer.MAX_VALUE;;
+		int actId = Integer.MAX_VALUE;
 		try {
 			actId = Integer.parseInt(pb.getId());
 		} catch (NumberFormatException e1) {
@@ -1436,11 +1446,12 @@ public class OrderController {
 	public String sendShortMessage(HttpServletRequest request,Model model) {
 		logger.info("GameConfigController  -->   【/promoter/shortmessage】");
 		//********************************************************************************//
-		String cellphone = request.getParameter("cellphone");
+		String cellphone = request.getParameter("cellphone").trim();
 		String gameId = request.getParameter("gameId");
 		String gameName = request.getParameter("gameName");
 		int page= Integer.parseInt(request.getParameter("page"));
 		String searchGameName = request.getParameter("searchGameName");
+		logger.info("传递的游戏名称： "+searchGameName);
 		String type = request.getParameter("type");
 		String pageSize = request.getParameter("pageSize");
 		logger.info("page="+page+"   pageSize="+pageSize);
@@ -1471,52 +1482,6 @@ public class OrderController {
 			msg="用户手机号不正确，未发送 ："+cellphone;
 			logger.info("手机号验证不通过： "+cellphone);
 		}
-		
-//废弃通过用户playerid查询用户手机号的方式		
-/*		
-		String result = userInfoService.getUserInfo(playerId, gameId);
-		logger.info("访问获取的信息为："+result);
-		//短信接口测试
-		//String msgResulttest = userInfoService.sendShortMsg("15728046545", content);
-		//logger.info("发送短信测试结果： "+msgResulttest);
-		
-		JSONObject json1 = JSONObject.parseObject(result);
-		if(json1 != null) {
-			if(json1.get("data") != null && !json1.get("data").toString().equals("") ) {
-				String jsondata = json1.get("data").toString();
-				
-				JSONObject json2 = JSONObject.parseObject(jsondata);
-				if(json2 != null) {
-					if(json2.get("mobile") != null && !json2.get("mobile").toString().equals("") ) {
-						String mobile = json2.get("mobile").toString();
-						logger.info("查询到的手机号： "+mobile);
-						//对手机号进行校验 ^1[3|4|5|7|8][0-9]{9}$
-						Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");  
-						Matcher m = p.matcher(mobile); 
-						
-						if(m.matches()) {
-							//手机号验证通过 则发送短信
-							String msgResult = userInfoService.sendShortMsg(mobile, content);
-							//发送成功返回结果：  {"ret":"0","error_code":"0","data":"0"}
-							if(msgResult != null) {
-								JSONObject json3 = JSONObject.parseObject(msgResult);
-								logger.info("发送短信后返回的消息： "+msgResult);
-								if(json3 != null) {
-									if(json3.get("ret").equals("0")) {
-										msg="短信发送成功！";
-									} 
-								}
-							}
-							
-						} else {
-							msg="用户手机号不正确，未发送 ："+mobile;
-							logger.info("手机号验证不通过： "+mobile);
-						}
-					}
-				}
-			}
-		}
-    */
 		return "forward:/promoter/payedorderlistsearch?searchGameName="+searchGameName+"&page="+page+"&pageSize="+pageSize+"&type="+type+"&msg="+msg;
 	}
 	
@@ -2068,7 +2033,6 @@ public class OrderController {
 			if(pb != null)
 				actId = pb.getId();
 			logger.info("当前游戏名称是 ："+gameName+"  游戏Id： "+gameId);
-			logger.info("查询到的PromoterBean是 ："+pb.toString());
 		}
 		
 		model.addAttribute("actId", actId);

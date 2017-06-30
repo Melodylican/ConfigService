@@ -305,7 +305,7 @@ public class UserInfoService implements IUserInfo {
 		String requestUrlParams="";
 		try {
 			requestUrlParams = "content="+URLEncoder.encode(content,"utf-8")+"&mobile="+mobile;
-			logger.info("访问的Url： "+this.updateForumReply+"  传递的参数是： "+requestUrlParams);
+			logger.info("访问的Url： "+this.shortMsgUrl+"  传递的参数是： "+requestUrlParams);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

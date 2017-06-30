@@ -310,6 +310,7 @@ tr.select th,tr.select td {
 							var nickname= eval('result.nick_name');
 							var registertime = eval('result.create_time');
 							var mobile = eval('result.mobile');
+							
 							if(level == -1)
 								level = "未查到等级信息";
 							if(time == -1)
@@ -402,6 +403,10 @@ tr.select th,tr.select td {
 							var nickname= eval('result.nick_name');
 							var registertime = eval('result.create_time');
 							var mobile = eval('result.mobile');
+							var uid = eval('result.uid');
+							
+							if(uid == -1 || uid == "")
+								uid="未查到用户的uid";
 							if(level == -1)
 								level = "未查到等级信息";
 							if(time == -1)

@@ -65,11 +65,8 @@
 		</div>
 		<div class="colMain">
 			<div class="crumb">
-				<span>当前位置：</span> <strong>配置管理           <c:if test="${not empty insertMsg}">
-				                                              <h1><font color="red">${insertMsg}</font></h1>
-			                                           </c:if>
-			                                           <c:if test="${not empty insertMsgTime}">
-				                                              <h1><font color="red">${insertMsgTime}</font></h1>
+				<span>当前位置：</span> <strong>配置管理           <c:if test="${not empty updateMsg}">
+				                                              <h1><font color="red">${updateMsg}</font></h1>
 			                                           </c:if>
 			                                           </strong>
 			</div>
