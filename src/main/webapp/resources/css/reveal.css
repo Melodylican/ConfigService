@@ -106,7 +106,7 @@
 /*回复吐槽样式*/
 .reveal-modal3 {
 		visibility: hidden;
-		top: 30%; 
+		top: 22%; 
 		left: 38%;
 		margin-left: -120px;
 		background: #eee url(modal-gloss.png) no-repeat -200px -80px;

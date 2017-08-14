@@ -26,8 +26,7 @@ import com.dsky.baas.configservice.model.RedeemCodeBean;
  * @author chris.li
  */
 public class ApiResultPacker {
-	private static final Logger logger = Logger
-			.getLogger(ApiResultPacker.class);
+	private static final Logger logger = Logger.getLogger(ApiResultPacker.class);
 	
 	public static ApiResultObject packToApiResultObject(Integer code,String msg,Object data,Object ext){
 		ApiResultObject resultObj = new ApiResultObject();
@@ -245,6 +244,10 @@ public class ApiResultPacker {
 		apiResult.setRechargeA(iBean.getRechargeA());
 		apiResult.setRechargeB(iBean.getRechargeB());
 		apiResult.setRecharge(iBean.getRecharge());
+		apiResult.setCallbackUrl(rBean.getCallbackUrl());
+		apiResult.setRechargeSecond(iBean.getRechargeSecond());
+		apiResult.setRechargeSecondPercent(iBean.getRechargeSecondPercent());
+		apiResult.setRechargeSecondOpen(iBean.getRechargeSecondOpen());
 		return apiResult;
 	}
 	

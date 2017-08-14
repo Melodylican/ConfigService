@@ -194,3 +194,12 @@ alter table tb_integralscheme add column qqClickShare int NOT NULL COMMENT '点�
 alter table tb_integralscheme add column qqClickShareSuccess int NOT NULL COMMENT 'qq分享成功奖励积分';
 alter table tb_integralscheme add column weiboClickShare int NOT NULL COMMENT '点击微博分享奖励积分';
 alter table tb_integralscheme add column weiboClickShareSuccess int NOT NULL COMMENT '微博分享成功奖励积分';
+
+## 2017-7-3号更新数据库
+alter table tb_redeemcode add column callbackUrl varchar(200) COMMENT '推广游戏端的回调地址';
+alter table tb_integralscheme add column rechargeSecond int COMMENT '用户充值奖励第二个下限,超过这个下限按照百分比奖励';
+alter table tb_integralscheme add column rechargeSecondPercent double COMMENT '用户充值奖励百分比,超过第二个充值下限按照百分比奖励';
+alter table tb_integralscheme add column rechargeSecondOpen int COMMENT '充值奖励第二下限是否对所有玩家开放  1：对所有玩家开放，0：只对邀请过玩家的用户开放';
+
+
+

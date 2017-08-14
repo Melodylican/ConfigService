@@ -12,9 +12,9 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <title>推广员后台管理系统</title>
 <link href="<%=request.getContextPath()%>/resources/css/reset.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/reveal.css">
+<link href="<%=request.getContextPath()%>/resources/css/reveal.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/resources/css/layout-ms.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<link href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="header">
@@ -89,7 +89,7 @@
 							结束时间：<input type="text" id="datetimepicker_dark2" placeholder="点击选择日期时间" name="endTime" value="${endTime }" class="iText" />
 						</p>
 						<input type="submit" value="查询" class="btn" />
-						<a href="<%=request.getContextPath()%>/statistics/export?gameId=${gameId}&actId=${actId}&beginTime=${beginTime}&endTime=${endTime}&pic=pic1" style="background-color:green" class="btn">导出Excel</a>
+						<a href="<%=request.getContextPath()%>/statistics/export?gameId=${gameId}&actId=${actId}&beginTime=${beginTime}&endTime=${endTime}&pic=${datatype}" style="background-color:green" class="btn">导出Excel</a>
 					</form>
 			</div>
 			<div class="wrap">

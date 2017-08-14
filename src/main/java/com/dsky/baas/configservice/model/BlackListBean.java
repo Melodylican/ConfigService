@@ -35,7 +35,7 @@ public class BlackListBean implements Serializable{
 	//黑名单对应的游戏名称
 	private String gameName;
 	//黑名单对应的用户id
-	private int playerId;
+	private String playerId;
 	//加入黑名单时间
 	private int insertTime;
 	//从黑名单移除的时间
@@ -61,10 +61,10 @@ public class BlackListBean implements Serializable{
 	public void setGameName(String gameName) {
 		this.gameName = gameName;
 	}
-	public int getPlayerId() {
+	public String getPlayerId() {
 		return playerId;
 	}
-	public void setPlayerId(int playerId) {
+	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
 	}
 	public int getInsertTime() {

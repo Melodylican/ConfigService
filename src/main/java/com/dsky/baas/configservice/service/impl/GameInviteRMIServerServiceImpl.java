@@ -36,7 +36,7 @@ public class GameInviteRMIServerServiceImpl {
 		return gameInviteService.getInvitedCodeByCode(code);
 	}
 	
-	public InvitedCode getInvitedCodeByPlayerIdAndGameIdAndActId(int playerId, int gameId, int actId) throws Exception {
+	public InvitedCode getInvitedCodeByPlayerIdAndGameIdAndActId(Long playerId, int gameId, int actId) throws Exception {
 		return gameInviteService.getInvitedCodeByPlayerIdAndGameIdAndActId(playerId, gameId, actId);
 	}
 	

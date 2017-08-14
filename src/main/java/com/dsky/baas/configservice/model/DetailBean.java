@@ -2,13 +2,13 @@ package com.dsky.baas.configservice.model;
 
 public class DetailBean {
     //被推广员账号
-    private Integer fromPlayerId;
+    private String fromPlayerId;
     //推广员获得的积分
     private Integer addNum;
     //邀请码
     private String invitedCode;
     //推广员账号
-    private Integer playerId;
+    private String playerId;
     //时间
     private String createTime;
     //游戏Id
@@ -16,10 +16,10 @@ public class DetailBean {
     //备注
     private String memo;
 
-	public Integer getFromPlayerId() {
+	public String getFromPlayerId() {
 		return fromPlayerId;
 	}
-	public void setFromPlayerId(Integer fromPlayerId) {
+	public void setFromPlayerId(String fromPlayerId) {
 		this.fromPlayerId = fromPlayerId;
 	}
 	public Integer getAddNum() {
@@ -34,10 +34,10 @@ public class DetailBean {
 	public void setInvitedCode(String invitedCode) {
 		this.invitedCode = invitedCode;
 	}
-	public Integer getPlayerId() {
+	public String getPlayerId() {
 		return playerId;
 	}
-	public void setPlayerId(Integer playerId) {
+	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
 	}
 	public String getCreateTime() {

@@ -14,6 +14,7 @@ public class RedeemCodeBean {
 	private String title;//分享标题
 	private String redeemDesc;//分享描述
     private String shareMethod;//可分享的方式（微信，朋友圈，QQ，微博）
+    private String callbackUrl;//用于回调通知游戏朋友关系
 	
 	public int getId() {
 		return id;
@@ -70,13 +71,21 @@ public class RedeemCodeBean {
 	public void setDeviceLimit(int deviceLimit) {
 		this.deviceLimit = deviceLimit;
 	}
+	
+	public String getCallbackUrl() {
+		return callbackUrl;
+	}
+	public void setCallbackUrl(String callbackUrl) {
+		this.callbackUrl = callbackUrl;
+	}
 	@Override
 	public String toString() {
 		return "RedeemCodeBean [id=" + id + ", deviceCount=" + deviceCount
 				+ ", recommandCount=" + recommandCount + ", deviceLimit="
 				+ deviceLimit + ", h5Url=" + h5Url + ", imgUrl=" + imgUrl
 				+ ", title=" + title + ", redeemDesc=" + redeemDesc
-				+ ", shareMethod=" + shareMethod + "]";
+				+ ", shareMethod=" + shareMethod + ", callbackUrl="
+				+ callbackUrl + "]";
 	}
 
 }

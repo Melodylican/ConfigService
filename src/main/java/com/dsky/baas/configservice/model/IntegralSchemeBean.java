@@ -21,7 +21,6 @@ public class IntegralSchemeBean {
 	private int promoterB;//被推广员成长可获得积分 (B达到第一阶段等级后奖励积分)
 	private int promoterBSecond;//被推广员成长可获得积分 (B达到第二阶段等级后奖励积分)
 	private int promoterBThird;//被推广员成长可获得积分 (B达到第三阶段等级后奖励积分)
-
 	
 	private int promoterATime;//成为推广员的在线时间要求
 	private int promoterALevel;//成为推广员的等级要求
@@ -31,6 +30,10 @@ public class IntegralSchemeBean {
 	private int rechargeB;//B充值后B的奖励积分
 	private int recharge;//进行充值奖励的充值金额下限
 	
+	private int rechargeSecondOpen;//充值奖励第二下限是否对所有玩家开放 （1：对所有玩家开放，0：只对邀请过玩家的用户开放）
+	private int rechargeSecond; //充值奖励第二个下限，超过第二个下限按充值金额按比例奖励积分
+	private double rechargeSecondPercent;//充值奖励第二个下限，超过第二个下限按充值金额按比例奖励积分 百分比
+	
 	private int weixinClickShare;//微信分享奖励积分
 	private int weixinClickShareSuccess;//微信分享成功奖励积分
 	
@@ -39,6 +42,7 @@ public class IntegralSchemeBean {
 	
 	private int weiboClickShare;//微博点击分享奖励积分
 	private int weiboClickShareSuccess;//微博点击分享成功奖励积分
+	
 	
 	public int getId() {
 		return id;
@@ -192,6 +196,24 @@ public class IntegralSchemeBean {
 	public void setWeiboClickShareSuccess(int weiboClickShareSuccess) {
 		this.weiboClickShareSuccess = weiboClickShareSuccess;
 	}
+	public int getRechargeSecond() {
+		return rechargeSecond;
+	}
+	public void setRechargeSecond(int rechargeSecond) {
+		this.rechargeSecond = rechargeSecond;
+	}
+	public double getRechargeSecondPercent() {
+		return rechargeSecondPercent;
+	}
+	public void setRechargeSecondPercent(double rechargeSecondPercent) {
+		this.rechargeSecondPercent = rechargeSecondPercent;
+	}
+	public int getRechargeSecondOpen() {
+		return rechargeSecondOpen;
+	}
+	public void setRechargeSecondOpen(int rechargeSecondOpen) {
+		this.rechargeSecondOpen = rechargeSecondOpen;
+	}
 	@Override
 	public String toString() {
 		return "IntegralSchemeBean [id=" + id + ", register=" + register
@@ -205,6 +227,9 @@ public class IntegralSchemeBean {
 				+ promoterATime + ", promoterALevel=" + promoterALevel
 				+ ", redeemCode=" + redeemCode + ", rechargeA=" + rechargeA
 				+ ", rechargeB=" + rechargeB + ", recharge=" + recharge
+				+ ", rechargeSecondOpen=" + rechargeSecondOpen
+				+ ", rechargeSecond=" + rechargeSecond
+				+ ", rechargeSecondPercent=" + rechargeSecondPercent
 				+ ", weixinClickShare=" + weixinClickShare
 				+ ", weixinClickShareSuccess=" + weixinClickShareSuccess
 				+ ", qqClickShare=" + qqClickShare + ", qqClickShareSuccess="

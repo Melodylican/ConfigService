@@ -176,7 +176,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			ob.setGameName(gameNameArr[0]);
 			ob.setLevel(eo.getLevel());
 			ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo.getCreateAt() + "") * 1000));
@@ -358,7 +358,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo.getCreateAt() + "") * 1000));
 			ob.setGameName(searchGameName);
 			ob.setLevel(eo.getLevel());
@@ -682,10 +682,10 @@ public class OrderController {
 			HttpServletRequest request, Model model) {
 		logger.info("OrderController  -->   【/promoter/detail】");
 		String userIdStr = request.getParameter("userId");
-		int userId =0;
+		long userId =0;
 		if(NumberUtils.isNumber(userIdStr)){
 			try{
-				userId = Integer.parseInt(userIdStr);
+				userId = Long.parseLong(userIdStr);
 			}catch(NumberFormatException e) {
 				logger.info("传入的userId= "+userIdStr+" 不是合法的数字型");
 				return "detail";
@@ -792,11 +792,10 @@ public class OrderController {
 		for (PointsLog p : listBean) {
 			DetailBean d = new DetailBean();
 			d.setAddNum(p.getAddNum());
-			d.setCreateTime(DateUtil.parseDate(Long.parseLong(p.getCreateTime()
-					+ "") * 1000));
+			d.setCreateTime(DateUtil.parseDate(Long.parseLong(p.getCreateTime() + "") * 1000));
 			d.setInvitedCode(p.getInvitedCode());
-			d.setFromPlayerId(p.getFromPlayerId());
-			d.setPlayerId(p.getPlayerId());
+			d.setFromPlayerId(p.getFromPlayerId()+"");
+			d.setPlayerId(p.getPlayerId()+"");
 			d.setMemo(p.getMemo());
 			logger.info("积分详情中 playerId=" + d.getPlayerId());
 			d.setGameId(p.getGameId());
@@ -918,7 +917,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			ob.setGameName(gameNameArr[0]);
 			ob.setLevel(eo.getLevel());
 			ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo
@@ -1044,7 +1043,7 @@ public class OrderController {
 					OrderBean ob = new OrderBean();
 					ob.setId(eo.getId());
 					ob.setGameId(eo.getGameId());
-					ob.setPlayerId(eo.getPlayerId());
+					ob.setPlayerId(eo.getPlayerId()+"");
 					ob.setGameName(gameNameArr[0]);
 					ob.setLevel(eo.getLevel());
 					ob.setOrderCreatedDate(DateUtil.parseDate(Long.parseLong(eo.getCreateAt() + "") * 1000));
@@ -1213,7 +1212,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			if(searchGameName != null && !"".equals(searchGameName))
 			    ob.setGameName(searchGameName);
 			else
@@ -1357,7 +1356,7 @@ public class OrderController {
 					OrderBean ob = new OrderBean();
 					ob.setId(eo.getId());
 					ob.setGameId(eo.getGameId());
-					ob.setPlayerId(eo.getPlayerId());
+					ob.setPlayerId(eo.getPlayerId()+"");
 					if(searchGameName != null && !"".equals(searchGameName))
 					    ob.setGameName(searchGameName);
 					else
@@ -1548,7 +1547,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			if(searchGameName != null && !"".equals(searchGameName))
 			    ob.setGameName(searchGameName);
 			else
@@ -1657,7 +1656,7 @@ public class OrderController {
 			OrderBean ob = new OrderBean();
 			ob.setId(eo.getId());
 			ob.setGameId(eo.getGameId());
-			ob.setPlayerId(eo.getPlayerId());
+			ob.setPlayerId(eo.getPlayerId()+"");
 			if(searchGameName != null && !"".equals(searchGameName))
 			    ob.setGameName(searchGameName);
 			else

@@ -22,7 +22,7 @@ public class GameRedeemCodeBean {
 	//状态
 	private int status;
 	//使用者id
-	private int playerId;
+	private String playerId;
 	public int getActId() {
 		return actId;
 	}
@@ -83,10 +83,10 @@ public class GameRedeemCodeBean {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public int getPlayerId() {
+	public String getPlayerId() {
 		return playerId;
 	}
-	public void setPlayerId(int playerId) {
+	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
 	}
 	@Override

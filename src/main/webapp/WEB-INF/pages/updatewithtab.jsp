@@ -194,6 +194,16 @@
 										</p>
 									</fieldset>								
 								</div>
+								
+								<div class="Content-Main">
+									<fieldset style="border-width: 2px; border-color: #008000; width:95%; height:450">
+										<legend>游戏回调接口配置</legend>
+										<p>
+											<label>游戏服务器回调接口</label> <input type="text"  name="callbackUrl"  value="${redeemCodeBean.callbackUrl }" class="iText"/> 
+										</p>
+										
+									</fieldset>								
+								</div>
 
 								<div class="Content-Buttom"> 
 								  <p align="center">
@@ -282,10 +292,19 @@
 											<p>
 												<label>推广员B级数要求(第三阶段)</label> <input type="number" name="levelThird" value="${integralSchemeBean.levelThird }" style="width: 60px" min="0" /> <label>级</label>
 											</p>
-											<p>														
+											<p>
+										  		<label>是否对全员开启第二充值奖励</label>
+									       		<input type="radio" <c:if test="${integralSchemeBean.rechargeSecondOpen == 1 }"> checked="checked" </c:if> name="rechargeSecondOpen" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;
+									       		<input type="radio" <c:if test="${integralSchemeBean.rechargeSecondOpen == 0 }"> checked="checked" </c:if> name="rechargeSecondOpen" value="0" class="inputStyle" />关闭
+							              	</p>
+											<p>
+												<label>充值奖励第二下限                   </label> <input type="number" name="rechargeSecond" value="${integralSchemeBean.rechargeSecond }" style="width: 60px" min="0" /> <label>元</label>
+											    <label>充值奖励百分比(第二下限)</label> <input type="number" step="0.01" name="rechargeSecondPercent" value="${integralSchemeBean.rechargeSecondPercent }" style="width: 60px"  /> <label>(用小数表示)</label>
+											</p>
+											<p>
 										  		<label>是否开启现金兑换</label>
-									       		<input type="radio" checked="checked" name="exchCash" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;
-									       		<input type="radio" name="exchCash" value="0" class="inputStyle" />关闭
+									       		<input type="radio" <c:if test="${promoterBean.exchCash == 1 }">checked="checked" </c:if> name="exchCash" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;
+									       		<input type="radio" <c:if test="${promoterBean.exchCash == 0 }">checked="checked" </c:if> name="exchCash" value="0" class="inputStyle" />关闭
 							              	</p>
 										  	<p>
 												<label>可分享方式</label>

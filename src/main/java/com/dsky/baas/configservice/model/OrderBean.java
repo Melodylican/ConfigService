@@ -10,7 +10,7 @@ public class OrderBean {
     //订单编号
     private String orderId;
     //用户id
-    private Integer playerId;
+    private String playerId;
     //游戏id
     private Integer gameId;
     //游戏名称
@@ -54,10 +54,10 @@ public class OrderBean {
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public Integer getPlayerId() {
+	public String getPlayerId() {
 		return playerId;
 	}
-	public void setPlayerId(Integer playerId) {
+	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
 	}
 	public Integer getGameId() {

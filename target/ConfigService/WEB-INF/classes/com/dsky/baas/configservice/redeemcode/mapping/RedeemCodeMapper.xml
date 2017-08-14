@@ -11,7 +11,7 @@
 		<result column="delete_time" property="delTime" jdbcType="INTEGER" />
 		<result column="update_time" property="updateTime" jdbcType="INTEGER" />
 		<result column="status" property="status" jdbcType="INTEGER" />
-		<result column="player_id" property="playerId" jdbcType="INTEGER" />
+		<result column="player_id" property="playerId" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="RedeemCode_Column_List">
 		id,game_id,act_id,code,score,create_time,delete_time,update_time,status,player_id

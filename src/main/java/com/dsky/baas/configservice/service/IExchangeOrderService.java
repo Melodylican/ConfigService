@@ -7,8 +7,8 @@ import com.dsky.baas.pointsservice.model.ExchangeOrder;
 
 public interface IExchangeOrderService {
 	public ExchangeOrder createOrder(int playerId,int gameId,int planId,int requestPoints,int payMethod,String payInfo,String userMemo);
-	public List<ExchangeOrder> getExchangeLogs(int playerId,int gameId,int pageNum,int resultSize);
-	public List<ExchangeOrder> getExchangeLogs(int playerId,int gameId,int pageNum);
+	public List<ExchangeOrder> getExchangeLogs(Long playerId,int gameId,int pageNum,int resultSize);
+	public List<ExchangeOrder> getExchangeLogs(Long playerId,int gameId,int pageNum);
 	public List<ExchangeOrder> getExchangeOrderByGameId(int gameId,int startRow,int endRow);
 	public List<ExchangeOrder> getExchangeOrderBystatus(int gameId,String status,int startRow,int endRow);
 	public int getExchangeOrderTotalNum(int gameId);

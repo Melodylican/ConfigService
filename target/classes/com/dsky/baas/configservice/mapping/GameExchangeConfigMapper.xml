@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsky.baas.configservice.dao.GameExchangeMapper">
+	<resultMap id="ExchangeResultMap" type="com.dsky.baas.configservice.model.ExchangeBean">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="gameName" property="gameName" jdbcType="VARCHAR" />
+		<result column="gameId" property="gameId" jdbcType="VARCHAR" />
+		<result column="exchBeginTime" property="exchBeginTime" jdbcType="TIMESTAMP" />
+		<result column="exchEndTime" property="exchEndTime" jdbcType="TIMESTAMP" />
+		<result column="exchLimit" property="exchLimit" jdbcType="INTEGER" />
+		<result column="period1" property="period1" jdbcType="INTEGER" />
+		<result column="period2" property="period2" jdbcType="INTEGER" />
+		<result column="exchStandard1" property="exchStandard1" jdbcType="INTEGER" />
+		<result column="exchStandard2" property="exchStandard2" jdbcType="INTEGER" />
+		<result column="createdBy" property="createdBy" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Exchange_Column_List">
+		id,gameName,gameId,exchBeginTime,exchEndTime,exchLimit,period1,period2,exchStandard1,exchStandard2,createdBy
+	</sql>
+	
+	<select id="selectExchByPaging" resultMap="ExchangeResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Exchange_Column_List" />
+		from tb_exchange
+         where gameName = #{gameName} or 'SUPER_ADMIN'=#{userRole}
+		ORDER BY id desc limit #{startRow},#{endRow};
+	</select>
+	
+		<!-- 判断新创建的数据是否可创建 -->
+	<select id="createExch"  resultType="String" parameterType="com.dsky.baas.configservice.model.ExchangeBean">
+		select 'false' from tb_exchange where  gameName=#{gameName} and (
+		             ( exchEndTime &gt; #{exchBeginTime} and exchEndTime &lt; #{exchEndTime} ) or 
+		             ( exchBeginTime &lt; #{exchBeginTime} and exchEndTime &gt; #{exchEndTime}) or
+		             ( exchBeginTime &gt; #{exchBeginTime} and exchEndTime &gt; #{exchEndTime} and exchBeginTime &lt;#{exchEndTime})
+		             ) order by exchEndTime desc limit 1;
+	</select>
+	
+			<!-- 判断更新的数据是否可创建 -->
+	<select id="updateExch"  resultType="String" parameterType="com.dsky.baas.configservice.model.ExchangeBean">
+		select 'false' from tb_exchange where  gameName=#{gameName} and (
+		             ( exchEndTime &gt; #{exchBeginTime} and exchEndTime &lt; #{exchEndTime} ) or 
+		             ( exchBeginTime &lt; #{exchBeginTime} and exchEndTime &gt; #{exchEndTime}) or
+		             ( exchBeginTime &gt; #{exchBeginTime} and exchEndTime &gt; #{exchEndTime} and exchBeginTime &lt;#{exchEndTime})
+		             ) and id &lt;&gt; #{id} order by exchEndTime desc limit 1;
+	</select>
+
+	<select id="selectExchangeBygameName" resultMap="ExchangeResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Exchange_Column_List" />
+		from tb_exchange
+		where gameName= #{gameName} and <!-- (createdBy = #{createdBy} or 'SUPER_ADMIN'=#{userRole}) and --> exchBeginTime &gt;= #{exchBeginTime} and exchEndTime &lt;= #{exchEndTime} limit #{startRow},#{endRow};
+	</select>
+	
+	<select id="selectExchangeById" resultMap="ExchangeResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Exchange_Column_List" />
+		from tb_exchange
+		where id= #{id};
+	</select>
+
+	<select id="selectExchBean" resultMap="ExchangeResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Exchange_Column_List" />
+		from tb_exchange
+		where gameName= #{gameName} and exchBeginTime &lt;= #{currentDate} and exchEndTime &gt;= #{currentDate} order by exchEndTime desc,id desc limit 1;
+	</select>
+	
+	<select id="getGameIdByGameName" resultType="String">
+		select gameId from tb_gameType where gameName= #{gameName};
+	</select>
+	<select id="selectGameNameByGameId" resultType="String">
+		select gameName from tb_gameType where gameId= #{gameId};
+	</select>
+		
+	<select id="selectExchangeCount" resultType="int" parameterType="java.util.Map">
+		select count(*) from tb_exchange
+		where gameName= #{gameName} and <!-- (createdBy = #{createdBy} or 'SUPER_ADMIN'=#{userRole}) and --> exchBeginTime &gt;= #{exchBeginTime} and exchEndTime &lt;= #{exchEndTime};
+	</select>
+	
+	
+	<select id="getExchangeTotalRows" resultType="int">
+		select count(*) from tb_exchange  where gameName=#{gameName} or 'SUPER_ADMIN'=#{userRole} ;
+	</select>
+	
+	<update id="updateExchangeById" parameterType="com.dsky.baas.configservice.model.ExchangeBean">
+		update tb_exchange
+		<set>
+			<if test="gameName != null">
+				gameName = #{gameName},
+			</if>
+		    <if test="gameId != null">
+				gameId = #{gameId},
+			</if>
+			<if test="exchBeginTime != null">
+				exchBeginTime = #{exchBeginTime},
+			</if>
+			<if test="exchEndTime != null">
+				exchEndTime = #{exchEndTime},
+			</if>
+			<if test="exchLimit != null">
+				exchLimit = #{exchLimit},
+			</if>
+			<if test="period1 != null">
+				period1 = #{period1},
+			</if>
+			<if test="period2 != null">
+				period2 = #{period2},
+			</if>
+			<if test="exchStandard1 != null">
+				exchStandard1 = #{exchStandard1},
+			</if>
+			<if test="exchStandard2 != null">
+				exchStandard2 = #{exchStandard2},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<insert id="insertExchange" parameterType="com.dsky.baas.configservice.model.ExchangeBean">
+		insert into tb_exchange (id,gameId,gameName,exchBeginTime,exchEndTime,exchLimit,period1,period2,exchStandard1,exchStandard2,createdBy)
+		values (#{id},#{gameId},#{gameName}, #{exchBeginTime},#{exchEndTime},#{exchLimit},#{period1},#{period2},#{exchStandard1},
+		#{exchStandard2},#{createdBy})
+	</insert>
+	
+	<delete id="deleteExchangeById" >
+		delete from tb_exchange
+		where id = #{id}
+	</delete>
+	
+</mapper>

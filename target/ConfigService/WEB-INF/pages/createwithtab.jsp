@@ -190,6 +190,16 @@
 												value="${redeemCodeBean.recommandCount }" style="width: 60px;background-color:grey"
 												min="0" /> <label>次</label>
 										</p>
+									</fieldset>
+								</div>
+								
+								<div class="Content-Main">
+									<fieldset style="border-width: 2px; border-color: #008000; width:95%; height:450">
+										<legend>游戏回调接口配置</legend>
+										<p>
+											<label>游戏服务器回调接口</label> <input type="text"  name="callbackUrl"  value="${redeemCodeBean.callbackUrl }" class="iText"/> 
+										</p>
+										
 									</fieldset>								
 								</div>
 
@@ -221,12 +231,14 @@
 											<p>
 												<label>第三阶段获得</label> <input id="promoterAThird" type="number" name="promoterAThird" value="${integralSchemeBean.promoterAThird }" style="width: 60px"min="0" > <label>个积分</label>
 								                <label><font color="red">注：</font>第三阶段获得为玩家B达到第三阶段等级时，A获得的奖励积分</label>
-											</p>														
+											</p>
+ 														
 											<p>
 											    <label>推广积分上限</label> <input
 													id="scoreLimit" type="number" name="scoreLimit" value="${(integralSchemeBean.promoterA+integralSchemeBean.promoterAFirst+integralSchemeBean.promoterASecond+integralSchemeBean.promoterAThird)*redeemCodeBean.recommandCount }"
 													style="width: 60px" min="0" /> <label>个积分</label>
 											</p>
+
 											<p>
 												<label>推广员等级要求</label> <input id="promoterALevel" type="number" name="promoterALevel" value="${integralSchemeBean.promoterALevel }" style="width: 60px"min="0" > <label>级</label>
 								                <label><font color="red">注：</font>成为推广员的等级要求,没有要求输入0</label>
@@ -280,6 +292,10 @@
 											<p>
 												<label>推广员B级数要求(第三阶段)</label> <input type="number" name="levelThird" value="${integralSchemeBean.levelThird }" style="width: 60px" min="0" /> <label>级</label>
 											</p>
+											<p>
+												<label>充值奖励第二下限                   </label> <input type="number" name="rechargeSecond" value="${integralSchemeBean.rechargeSecond }" style="width: 60px" min="0" /> <label>元</label>
+											    <label>充值奖励百分比(第二下限)</label> <input type="number"step="0.01" name="rechargeSecondPercent" value="${integralSchemeBean.rechargeSecondPercent }" style="width: 60px" /> <label>(用小数表示)</label>
+											</p>											
 											<p>														
 										  		<label>是否开启现金兑换</label>
 									       		<input type="radio" checked="checked" name="exchCash" value="1" class="inputStyle"/>开启&nbsp;&nbsp;&nbsp;&nbsp;

@@ -706,13 +706,13 @@ public class GameConfigController {
 			listorg = RedisMethonds.getBlackListBean("blacklist:"+actId+":"+gameId);
 			if(NumberUtils.isNumber(strPlayerId)) {
 				logger.info("playerId = "+strPlayerId);
-				int playerId = Integer.parseInt(strPlayerId);
+				
 				//对象数据封装
 				blb = new BlackListBean();
 				blb.setId(actId);
 				blb.setGameId(gameId);
 				blb.setGameName(gameName);
-				blb.setPlayerId(playerId);
+				blb.setPlayerId(strPlayerId);
 				long nowTime = System.currentTimeMillis();
 				blb.setInsertTime((int)(nowTime/1000L));
 				if(expireTime != 0) {
@@ -799,13 +799,13 @@ public class GameConfigController {
 			String strPlayerId = request.getParameter("playerId").toString().trim();
 			if(NumberUtils.isNumber(strPlayerId)) {
 				logger.info("进入加入黑名单逻辑");
-				int playerId = Integer.parseInt(strPlayerId);
+				//int playerId = Integer.parseInt(strPlayerId);
 				//对象数据封装
 				blb = new BlackListBean();
 				blb.setId(actId);
 				blb.setGameId(gameId);
 				blb.setGameName(gameName);
-				blb.setPlayerId(playerId);
+				blb.setPlayerId(strPlayerId);
 				long nowTime = System.currentTimeMillis();
 				blb.setInsertTime((int)(nowTime/1000L));
 				if(expireTime != 0) {
@@ -974,7 +974,7 @@ public class GameConfigController {
             }
             BlackListBean blb = new BlackListBean();
             logger.info(String.valueOf(lo.get(0))+"   ::   "+String.valueOf(lo.get(1)));
-            blb.setPlayerId(Integer.parseInt(String.valueOf(lo.get(0))));
+            blb.setPlayerId(String.valueOf(lo.get(0)));//TODO playerId int -> String
             int expireTime = Integer.parseInt(String.valueOf(lo.get(1)));//(int)((nowTime)/1000L) 
             if(expireTime == 0)
             	blb.setExpireTime(0);

@@ -20,7 +20,7 @@ public class ExchangeOrder implements Serializable {
     private String orderId;
 
     //用户id
-    private Integer playerId;
+    private Long playerId;
 
 
    //游戏id
@@ -127,12 +127,12 @@ public class ExchangeOrder implements Serializable {
     }
 
     
-    public Integer getPlayerId() {
+    public Long getPlayerId() {
         return playerId;
     }
 
     
-    public void setPlayerId(Integer playerId) {
+    public void setPlayerId(Long playerId) {
         this.playerId = playerId;
     }
 

@@ -110,7 +110,7 @@
 												        <a href="<%=request.getContextPath()%>/promoter/move2top?cid=${list.cid }&pageSize=${pageSize}&page=${page}&actId=${actId }&gameId=${gameId}&gameName=${gameName}&type=2" class="btn" style="background-color:#00A600"><small>取消置顶</small></a>  
 												  </c:otherwise> 
 												</c:choose> 
-									          <a href="javascript:void(0);" item-to-uid="${list.userId}" item-cid="${list.cid}" item-to-nickname="${list.nickname }" data-reveal-id="myModal" data-animation="fade" class="btn"><small>回复</small></a>
+									          <a href="javascript:void(0);" item-message="<c:out value="${list.content }" escapeXml="true"></c:out>" item-to-uid="${list.userId}" item-cid="${list.cid}" item-to-nickname="${list.nickname }" data-reveal-id="myModal" data-animation="fade" class="btn"><small>回复</small></a>
 									        </i>
 									      </p>
 									      <p>
@@ -131,7 +131,7 @@
 												              	    <!-- <a href="<%=request.getContextPath()%>/promoter/deleteforumreply?rid=${listreply.rid}&pageSize=${pageSize}&page=${page}&actId=${actId }&gameId=${gameId}&gameName=${gameName}"class="btn"><small>删除</small></a>  -->
 												              	    <a href="javascript:void(0);" item-id="${listreply.rid}" data-reveal-id3="myModal4" data-animation="fade" class="btn"><small>删除</small></a>
 												              	    <a href="javascript:void(0);" item-rid="${listreply.rid}" item-content="${listreply.content}" data-reveal-id1="myModal1" data-animation="fade" class="btn"><small>修改</small></a>
-												              	    <a href="javascript:void(0);" item-to-uid="${listreply.from_uid}" item-cid="${listreply.rid}" item-to-nickname="${listreply.to_nickname }" data-reveal-id="myModal" data-animation="fade" class="btn"><small>回复</small></a>
+												              	    <a href="javascript:void(0);" item-message="<c:out value="${listreply.content }" escapeXml="true"></c:out>" item-to-uid="${listreply.from_uid}" item-cid="${list.cid}" item-to-nickname="${listreply.to_nickname }" data-reveal-id="myModal" data-animation="fade" class="btn"><small>回复</small></a>
 												              	</i>
 												              </p> 
 												              <p>
@@ -198,6 +198,7 @@
 	<center><h4 ><font color="red">请输入吐槽回复信息</font></h4></center><br>
 	<a class="close-reveal-modal"><font size="11">&#215;</font></a>
 	<center>
+	<textarea style="background:#FFC1C1" type="text" name="content" rows="5" cols="100" id="message" readonly="readonly"></textarea><br><br>
 	<form action="<%=request.getContextPath()%>/promoter/forumreply" method="post"  data-ajax="false">
 		<input type="hidden" name="gameId" value="${gameId }" />
 		<input type="hidden" name="actId" value="${actId}" />
@@ -209,7 +210,7 @@
 		<input type="hidden" name="cid" id="cid" value="0" />
 		<input type="hidden" name="page" value="${page}" />
 		<input type="hidden" name="pageSize" value="${pageSize }" />
-		<textarea type="text" name="content" rows="10" cols="100"></textarea><br><br>
+		<textarea style="background:#BCD2EE" type="text" name="content" rows="10" cols="100"></textarea><br><br>
 		<center><input type="submit" style="height:30px; border: 1px solid #999;width: 100px;" value="提交" /></center>
     </form>
     </center>
@@ -307,10 +308,13 @@
 		var to_uid = $(this).attr("item-to-uid");
 		var cid = $(this).attr("item-cid");
 		var to_nickname = $(this).attr("item-to-nickname");
+		var message = $(this).attr("item-message");
+		console.log(message);
         //e.preventDefault();
         $("#to_uid").val(to_uid);
         $("#cid").val(cid);
         $("#to_nickname").val(to_nickname);
+        $("#message").val(message);
         var modalLocation = $(this).attr('data-reveal-id');
         $('#' + modalLocation).reveal($(this).data());
 

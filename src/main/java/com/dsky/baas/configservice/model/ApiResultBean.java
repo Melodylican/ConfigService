@@ -90,6 +90,14 @@ public class ApiResultBean implements Serializable{
 		private int rechargeB;
 		//给予充值奖励的充值金额下限                    //TODO 新增属性
 		private int recharge;
+		//新增游戏回调通知好友的配置
+		private String callbackUrl; //TODO 新增属性
+		//充值奖励第二个下限，超过第二个下限按充值金额按比例奖励积分
+		private int rechargeSecond; 
+		//充值奖励第二个下限，超过第二个下限按充值金额按比例奖励积分 百分比
+		private double rechargeSecondPercent;//TODO 新增属性2017-07-06
+		//充值奖励第二下限是否对所有玩家开放 （1：对所有玩家开放，0：只对邀请过玩家的用户开放）
+		private int rechargeSecondOpen;//TODO 新增属性 2017-07-07
 		
 		public Integer getCode() {
 			return code;
@@ -331,6 +339,30 @@ public class ApiResultBean implements Serializable{
 		}
 		public void setRecharge(int recharge) {
 			this.recharge = recharge;
+		}
+		public String getCallbackUrl() {
+			return callbackUrl;
+		}
+		public void setCallbackUrl(String callbackUrl) {
+			this.callbackUrl = callbackUrl;
+		}
+		public int getRechargeSecond() {
+			return rechargeSecond;
+		}
+		public void setRechargeSecond(int rechargeSecond) {
+			this.rechargeSecond = rechargeSecond;
+		}
+		public double getRechargeSecondPercent() {
+			return rechargeSecondPercent;
+		}
+		public void setRechargeSecondPercent(double rechargeSecondPercent) {
+			this.rechargeSecondPercent = rechargeSecondPercent;
+		}
+		public int getRechargeSecondOpen() {
+			return rechargeSecondOpen;
+		}
+		public void setRechargeSecondOpen(int rechargeSecondOpen) {
+			this.rechargeSecondOpen = rechargeSecondOpen;
 		}
 		
 }

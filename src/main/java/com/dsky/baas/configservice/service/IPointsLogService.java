@@ -8,8 +8,8 @@ public interface IPointsLogService {
 	
 
 	
-	public void log(int playerId, int fromPlayerId,int gameId,int actid,String eventName,String eventArgs,int addNum,int shouldNum,
-			String memo,String code,int createTime,int afterNum);
+	public void log(long playerId, long fromPlayerId,int gameId,int actid,String eventName,String eventArgs,int addNum,int shouldNum,
+			String memo,String code,int createTime,int afterNum , int channelType);
 	
 	/**
 	 * @author eaves.zhu 2016.8.16
@@ -18,7 +18,7 @@ public interface IPointsLogService {
 	 * @param gid
 	 * @return
 	 */
-	public List<PointsLog> getPonitsLog(int uid, int gid,int startRow,int endRow);
+	public List<PointsLog> getPonitsLog(long uid, int gid,int startRow,int endRow);
 	
 	/**
 	 * @author eaves.zhu
@@ -26,8 +26,8 @@ public interface IPointsLogService {
 	 * @param DateFrom  日期开始
 	 * @param  DateTo	日期
 	 */
-	public List<PointsLog> getPonitsLog(int uid, int gid,int startRow,int endRow,boolean from,int DateFrom,boolean to,int DateTo);
-	//public List<PointsLog> getPointsLogByDate();
+	public List<PointsLog> getPonitsLog(long uid, int gid,int startRow,int endRow,boolean from,int DateFrom,boolean to,int DateTo);
+	
 	
 	/**
 	 * @author eaves.zhu 2016.8.16
@@ -36,8 +36,23 @@ public interface IPointsLogService {
 	 * @param gid
 	 * @return
 	 */
-	public int getPonitsLogCount(int uid, int gid);
-	public int getPonitsLogCount(int uid, int gid,boolean from,int DateFrom,boolean to,int DateTo);
+	public int getPonitsLogCount(long uid, int gid);
+	public int getPonitsLogCount(long uid, int gid,boolean from,int DateFrom,boolean to,int DateTo);
+	
 	//后台需要总分
-	public int getPoints(int uid,int gid,int actid);
+	public int getPoints(long uid,int gid,int actid);
+
+	/**
+	 * 查询每个渠道的总积分
+	 * 
+	 * @param uid
+	 * @param gid
+	 * @return
+	 */
+	//public List<PointsLogDetail> getPonitsLogDetailByChannel(long uid, int gid);
+	
+	/**
+	 * 查询该用户的累计积分
+	 */
+	public int getAccumulatedPonits(long uid, int gid,int actid);
 }

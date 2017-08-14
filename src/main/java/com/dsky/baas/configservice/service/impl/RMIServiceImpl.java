@@ -20,15 +20,15 @@ public class RMIServiceImpl {
 		this.pointsLogService = pointsLogService;
 	}
 	
-	public List<PointsLog> getPonitsLog(int uid, int gid,int startRow,int endRow,boolean begin,int beginTime,boolean end,int endTime) throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
+	public List<PointsLog> getPonitsLog(long uid, int gid,int startRow,int endRow,boolean begin,int beginTime,boolean end,int endTime) throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
 		return pointsLogService.getPonitsLog(uid, gid,startRow,endRow,begin,beginTime,end,endTime);
 	}
 	
-	public int getPonitsLogCount(int uid,int gid,boolean begin,int beginTime,boolean end,int endTime) throws ConnectException,RemoteLookupFailureException,RemoteAccessException {
+	public int getPonitsLogCount(long uid,int gid,boolean begin,int beginTime,boolean end,int endTime) throws ConnectException,RemoteLookupFailureException,RemoteAccessException {
 		return pointsLogService.getPonitsLogCount(uid, gid,begin,beginTime,end,endTime);
 	}
 	
-	public int getPonitsLogCount(int uid, int gid) throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
+	public int getPonitsLogCount(long uid, int gid) throws ConnectException,RemoteLookupFailureException,RemoteAccessException{
 		return pointsLogService.getPonitsLogCount(uid, gid);
 	}
 	/**
@@ -44,7 +44,7 @@ public class RMIServiceImpl {
 	 * @return int   
 	 * @throws
 	 */
-	public int getPoints(int uid,int gid,int actid){
+	public int getPoints(long uid,int gid,int actid){
 		return pointsLogService.getPoints(uid,gid,actid);
 	}
 
